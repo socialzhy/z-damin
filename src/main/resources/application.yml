@@ -1,0 +1,9 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /admin
+
+spring:
+  profiles:
+    active: @env@
+

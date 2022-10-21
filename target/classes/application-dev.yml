@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:${DATASOURCE_DB-TYPE:mysql}://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:3306}/${DATASOURCE_DBNAME:z_admin}?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:root}
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    database: 0
+
+  data:
+    redis:
+      # 不使用redisRepository，如需使用，去掉该配置，默认为true（主要为解决服务启动时有一条日志，有一点强迫症 = =！）
+      repositories:
+        enabled: false
+
+mybatis-plus:
+  # 配置mapper.xml扫描路径
+  mapper-locations: classpath*:mybatis/**/*.xml
+  # 配置在mapper.xml中的参数类型(resultMap的type、parameterType、resultType等)可以不写全类名 com.z.admin.entity.po.CfgUser -> CfgUser
+  type-aliases-package: com.z.admin.entity.po
+  configuration:
+    # 配置输出sql语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: is_deleted #需要配置的逻辑删除数据库字段
+      logic-delete-value: 0   #配置逻辑删除字段为1是删除
+      logic-not-delete-value: 1  #配置逻辑删除字段为1是未删除

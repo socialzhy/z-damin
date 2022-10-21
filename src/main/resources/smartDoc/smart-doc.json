@@ -1,0 +1,14 @@
+{
+  "serverUrl": "http://localhost:8888",
+  "pathPrefix": "/admin",
+  "isStrict": false,
+  "allInOne": true,
+  "outPath": "/Users/java/work/my/api-doc",
+  "coverOld": true,
+  "packageFilters": "com.z.admin.controller.*",
+  "md5EncryptedHtmlName": false,
+  "projectName": "admin",
+  "style":"xt256",
+  "createDebugPage": true,
+  "skipTransientField": true
+}
