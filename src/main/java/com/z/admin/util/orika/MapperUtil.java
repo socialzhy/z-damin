@@ -1,6 +1,5 @@
 package com.z.admin.util.orika;
 
-import com.z.admin.util.orika.OrikaMapperFactory;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.metadata.ClassMapBuilder;
@@ -112,6 +111,7 @@ public class MapperUtil {
         classMapBuilder.byDefault().register();
         return factory.getMapperFacade();
     }
+
     /**
      * 获取自定义映射
      *

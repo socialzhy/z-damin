@@ -29,10 +29,11 @@ public class EasyExcelUtil {
 
     /**
      * 常规导出单sheet
+     *
      * @param response response
-     * @param data 需要导出的数据集合
-     * @param clazz 导出数据集合泛型
-     * @param fileName  文件名
+     * @param data     需要导出的数据集合
+     * @param clazz    导出数据集合泛型
+     * @param fileName 文件名
      */
     public static void exportData(HttpServletResponse response, List<ExportData<?>> data, Class<?> clazz, String fileName) throws Exception {
         // 设置contentType
@@ -52,9 +53,10 @@ public class EasyExcelUtil {
 
     /**
      * 常规多sheet导出
+     *
      * @param response response
-     * @param data  导出数据集合
-     * @param fileName  导出文件名称
+     * @param data     导出数据集合
+     * @param fileName 导出文件名称
      */
     public static void exportData(HttpServletResponse response, List<ExportData<?>> data, String fileName) throws Exception {
 
@@ -79,8 +81,9 @@ public class EasyExcelUtil {
 
     /**
      * 导出多sheet，合并单元格
+     *
      * @param response response
-     * @param data  导出数据集合 (可以通过设置CellWriteHandler指定合并规则)
+     * @param data     导出数据集合 (可以通过设置CellWriteHandler指定合并规则)
      * @param fileName 导出文件名称
      */
     public static void exportMergeData(HttpServletResponse response, List<ExportMergeData> data, String fileName) throws Exception {
@@ -99,7 +102,7 @@ public class EasyExcelUtil {
         for (int i = 0; i < data.size(); i++) {
             ExportMergeData exportData = data.get(i);
             ExcelWriterSheetBuilder writerSheetBuilder = EasyExcel.writerSheet(i, exportData.getSheetName()).head(exportData.getClazz());
-            if (ObjectUtils.isNotEmpty(exportData.getFlag()) && exportData.getFlag()){
+            if (ObjectUtils.isNotEmpty(exportData.getFlag()) && exportData.getFlag()) {
                 writerSheetBuilder.registerWriteHandler(exportData.getCellWriteHandler());
             }
             WriteSheet writeSheet = writerSheetBuilder.build();
@@ -111,13 +114,13 @@ public class EasyExcelUtil {
     /**
      * 格式设置
      */
-    private static HorizontalCellStyleStrategy generateStrategy(){
+    private static HorizontalCellStyleStrategy generateStrategy() {
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //设置背景颜色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         //设置头字体
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short)13);
+        headWriteFont.setFontHeightInPoints((short) 13);
         headWriteFont.setBold(true);
         headWriteCellStyle.setWriteFont(headWriteFont);
         //设置头居中
@@ -130,7 +133,7 @@ public class EasyExcelUtil {
         contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         //内容字体大小
         WriteFont contentWriteFont = new WriteFont();
-        contentWriteFont.setFontHeightInPoints((short)12);
+        contentWriteFont.setFontHeightInPoints((short) 12);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
 
         return new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);

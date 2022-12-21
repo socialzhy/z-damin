@@ -17,7 +17,7 @@ public enum ResultCodeEnum {
 
     //region 服务器层错误码 50000-59999
     //重复操作
-    REPEAT_OPERATION(50000,"您已经操作过了，请稍等");
+    REPEAT_OPERATION(50000, "您已经操作过了，请稍等");
     //endregion
 
 
@@ -58,7 +58,7 @@ public enum ResultCodeEnum {
         ResultCodeEnum[] enums = ResultCodeEnum.values();
         Map<Integer, String> resultCodeMap = new HashMap<>(enums.length);
         for (ResultCodeEnum e : enums) {
-            if(e.getKey().equals(code)){
+            if (e.getKey().equals(code)) {
                 return e;
             }
         }

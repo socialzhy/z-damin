@@ -8,8 +8,8 @@ import ma.glasnost.orika.metadata.Type;
 import java.util.LinkedHashMap;
 
 public class LinkedHashMapToTConverters<T> extends CustomConverter<LinkedHashMap, T> {
-     @Override
+    @Override
     public T convert(LinkedHashMap source, Type<? extends T> type, MappingContext mappingContext) {
-        return MapperUtil.map(source,type.getRawType());
+        return MapperUtil.map(source, type.getRawType());
     }
 }

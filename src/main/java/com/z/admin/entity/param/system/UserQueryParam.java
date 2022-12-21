@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 用户列表查询参数
+ *
  * @author zhy
  * @description
  * @date 2022/10/19

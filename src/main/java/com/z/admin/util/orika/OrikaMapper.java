@@ -22,15 +22,25 @@ public class OrikaMapper {
     private static final Boolean DEFAULT_USE_BUILTIN_LIST_CONVERTERS = Boolean.TRUE;
     private static final String DEFAULT_DELIMITER = ",";
 
-    /** 是否启用内置的 Boolean Converters，默认开启 */
+    /**
+     * 是否启用内置的 Boolean Converters，默认开启
+     */
     private final Boolean useBuiltinListConverters;
-    /** 是否启用内置的 List Converters，默认开启 */
+    /**
+     * 是否启用内置的 List Converters，默认开启
+     */
     private final Boolean useBuiltinBooleanConverters;
-    /** 启用 List Converters 时使用的分隔符，默认为 "," */
+    /**
+     * 启用 List Converters 时使用的分隔符，默认为 ","
+     */
     private final String delimiter;
-    /** Orika MapperFactory */
+    /**
+     * Orika MapperFactory
+     */
     private DefaultMapperFactory factory;
-    /** OrikaMapper 初始化标识，用 volatile 来保证多线程环境下的可见性 */
+    /**
+     * OrikaMapper 初始化标识，用 volatile 来保证多线程环境下的可见性
+     */
     private volatile boolean initialized;
 
     public OrikaMapper() {
@@ -64,7 +74,8 @@ public class OrikaMapper {
         factoryBuilder.mapNulls(false);
     }
 
-    protected void configure(MapperFactory factory) {}
+    protected void configure(MapperFactory factory) {
+    }
 
     protected void configureConverterFactory(ConverterFactory converterFactory) {
         if (useBuiltinBooleanConverters) {

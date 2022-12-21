@@ -21,7 +21,7 @@ public class TestController {
     public void test(@RequestParam("name") String name, HttpSession session) throws Exception {
         System.out.println(session.getAttribute("tok"));
         System.out.println(name);
-        session.setAttribute("tok","12312131");
+        session.setAttribute("tok", "12312131");
     }
 
     @PostMapping("/yy")

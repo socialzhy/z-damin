@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2022/10/20
  */
 @Data
-public class BasePageParam <T extends BasePo>{
+public class BasePageParam<T extends BasePo> {
 
     /**
      * 当前页

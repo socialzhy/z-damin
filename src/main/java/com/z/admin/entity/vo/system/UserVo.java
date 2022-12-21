@@ -19,6 +19,11 @@ public class UserVo {
     }
 
     /**
+     * 用户id
+     */
+    private Long id;
+
+    /**
      * 手机号
      */
 

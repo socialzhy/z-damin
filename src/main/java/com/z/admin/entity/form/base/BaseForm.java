@@ -12,10 +12,11 @@ import java.lang.reflect.ParameterizedType;
  * @date 2022/10/19
  */
 @Data
-public abstract class BaseForm <T extends BasePo>{
+public abstract class BaseForm<T extends BasePo> {
 
     /**
      * form 转 po
+     *
      * @param clazz po的class
      */
     public T toPo(Class<T> clazz) {

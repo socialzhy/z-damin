@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
-
 /**
  * @author zhy
  * @description 常规po
@@ -15,13 +13,17 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CommonPo extends BasePo{
+public class CommonPo extends BasePo {
 
-    /** 是否禁用 */
+    /**
+     * 是否禁用
+     */
     @TableField(fill = FieldFill.INSERT)
     private Integer isDisabled;
 
-    /** 是否删除 */
+    /**
+     * 是否删除
+     */
     @TableLogic //逻辑删除注解
     @TableField(fill = FieldFill.INSERT)
     private Integer isDeleted;

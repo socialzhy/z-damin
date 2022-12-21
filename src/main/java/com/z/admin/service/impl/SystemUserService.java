@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author zhy
- * @description
+ * @description 系统用户
  * @date 2022/10/17
  */
 @Service
@@ -21,7 +21,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     @Override
     public IPage<UserVo> query(UserQueryParam param) {
         IPage<SystemUser> iPageUser = this.page(param.getPage(), new QueryWrapper<>());
-        //todo 待处理 
         return iPageUser.convert(UserVo::new);
     }
 }

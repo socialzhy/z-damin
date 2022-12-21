@@ -17,6 +17,11 @@ import lombok.EqualsAndHashCode;
 public class SystemUser extends CommonPo {
 
     /**
+     * 用户id
+     */
+    private Long id;
+
+    /**
      * 手机号
      */
     private String mobile;
@@ -41,11 +46,15 @@ public class SystemUser extends CommonPo {
      */
     private String name;
 
-    /** 是否禁用 */
+    /**
+     * 是否禁用
+     */
     @TableField(fill = FieldFill.INSERT)
     private Integer isDisabled;
 
-    /** 是否删除 */
+    /**
+     * 是否删除
+     */
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     private Integer isDeleted;

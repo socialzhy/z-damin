@@ -19,16 +19,16 @@ import java.util.function.Supplier;
 
 /**
  * @author zhy
- * @date  2022-01-14
+ * @date 2022-10-14
  * @description 对象转换工具类
  */
-public class BeanUtils extends org.springframework.beans.BeanUtils{
+public class BeanUtils extends org.springframework.beans.BeanUtils {
 
-       /**
+    /**
      * 将source中不为空的字段，拷贝(覆盖)到target中
      */
     public static void copyPropertiesIgnoreNull(Object source, Object target) throws BeansException {
-        if (ObjectUtils.isEmpty(source)){
+        if (ObjectUtils.isEmpty(source)) {
             return;
         }
         Assert.notNull(target, "Target must not be null");
@@ -62,17 +62,19 @@ public class BeanUtils extends org.springframework.beans.BeanUtils{
 
     /**
      * 带回调函数的集合数据的拷贝（可自定义字段拷贝规则）
+     *
      * @param source: 数据源类
      * @param target: 目标类::new(eg: UserVO::new)
      */
     public static <S, T> T copyPropertiesIgnoreNull(S source, Supplier<T> target) {
-        return copyPropertiesIgnoreNull(source,target,null);
+        return copyPropertiesIgnoreNull(source, target, null);
     }
 
     /**
      * 带回调函数的集合数据的拷贝（可自定义字段拷贝规则）
-     * @param source: 数据源类
-     * @param target: 目标类::new(eg: UserVO::new)
+     *
+     * @param source:   数据源类
+     * @param target:   目标类::new(eg: UserVO::new)
      * @param callBack: 回调函数
      */
     public static <S, T> T copyPropertiesIgnoreNull(S source, Supplier<T> target, BeanCopyUtilCallBack<S, T> callBack) {
@@ -88,12 +90,12 @@ public class BeanUtils extends org.springframework.beans.BeanUtils{
     /**
      * 获取对象所有为null的字段
      */
-    public static String[] getNullPropertyNames (Object source) {
+    public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
         Set<String> emptyNames = new HashSet<>();
-        for(PropertyDescriptor pd : pds) {
+        for (PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());
         }
@@ -103,8 +105,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils{
 
     /**
      * 集合数据的拷贝
+     *
      * @param sources: 数据源类
-     * @param target: 目标类::new(eg: UserVO::new)
+     * @param target:  目标类::new(eg: UserVO::new)
      */
     public static <S, T> List<T> copyListProperties(List<S> sources, Supplier<T> target) {
         return copyListProperties(sources, target, null);
@@ -113,8 +116,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils{
 
     /**
      * 带回调函数的集合数据的拷贝（可自定义字段拷贝规则）
-     * @param sources: 数据源类
-     * @param target: 目标类::new(eg: UserVO::new)
+     *
+     * @param sources:  数据源类
+     * @param target:   目标类::new(eg: UserVO::new)
      * @param callBack: 回调函数
      */
     public static <S, T> List<T> copyListProperties(List<S> sources, Supplier<T> target, BeanCopyUtilCallBack<S, T> callBack) {
@@ -133,7 +137,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils{
     }
 
     @FunctionalInterface
-    public interface BeanCopyUtilCallBack <S, T> {
+    public interface BeanCopyUtilCallBack<S, T> {
 
         /**
          * 定义默认回调方法

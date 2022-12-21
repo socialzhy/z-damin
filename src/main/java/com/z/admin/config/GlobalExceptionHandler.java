@@ -1,8 +1,8 @@
 package com.z.admin.config;
 
-import com.z.admin.exception.ServiceException;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.vo.base.ResultCodeEnum;
+import com.z.admin.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Objects;
 
-/**.
+/**
+ * .
  * 异常统一处理，
+ *
  * @author zhy
  */
 @RestControllerAdvice
@@ -29,7 +31,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object handleException(Exception e) {
-        log.error("服务器错误",e);
+        log.error("服务器错误", e);
         return Result.fail(ResultCodeEnum.SERVER_ERROR);
     }
 
@@ -42,7 +44,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public Object serviceExceptionHandle(ServiceException e) {
         log.error("业务逻辑异常: {}", e.getMessage());
-        return Result.fail(e.getCode(),e.getMessage());
+        return Result.fail(e.getCode(), e.getMessage());
     }
 
     /**

@@ -11,7 +11,7 @@ public final class OrikaMapperFactory {
 
     private static volatile MapperFactory INSTANCE = null;
 
-    private OrikaMapperFactory(){
+    private OrikaMapperFactory() {
 
     }
 

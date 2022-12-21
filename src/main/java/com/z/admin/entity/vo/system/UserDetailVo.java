@@ -1,6 +1,6 @@
 package com.z.admin.entity.vo.system;
 
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.vo.base.BaseVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,8 +10,8 @@ import lombok.EqualsAndHashCode;
  * @date 2022/10/19
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class UserDetailVo{
+@EqualsAndHashCode(callSuper = true)
+public class UserDetailVo extends BaseVo {
 
     /**
      * 手机号
@@ -38,4 +38,5 @@ public class UserDetailVo{
      * 昵称
      */
     private String nickName;
+
 }

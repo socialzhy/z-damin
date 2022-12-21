@@ -76,12 +76,13 @@ public class Result<T> {
     }
 
     public static <T> Result<T> fail(String msg) {
-        return new Result<>(ResultCodeEnum.FAIL.getKey(),msg);
+        return new Result<>(ResultCodeEnum.FAIL.getKey(), msg);
     }
 
     public static <T> Result<T> fail(ResultCodeEnum code, T data) {
         return new Result<>(code, data);
     }
+
     public static <T> Result<T> fail(ResultCodeEnum code, String msg) {
         return new Result<>(code.getKey(), msg);
     }

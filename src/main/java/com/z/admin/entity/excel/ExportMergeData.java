@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ExportMergeData<T> extends ExportData<T>{
+public class ExportMergeData<T> extends ExportData<T> {
 
     private Boolean flag;
 
