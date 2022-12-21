@@ -5,5 +5,11 @@ server:
 
 spring:
   profiles:
-    active: test
+    active: dev
+  main:
+    allow-circular-references: true  # 解决循环依赖问题，官方不推荐
+  output:
+    ansi:
+      enabled: always # 彩色日志，可去掉
+
 

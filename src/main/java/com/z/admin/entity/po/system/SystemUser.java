@@ -17,11 +17,6 @@ import lombok.EqualsAndHashCode;
 public class SystemUser extends CommonPo {
 
     /**
-     * 用户id
-     */
-    private Long id;
-
-    /**
      * 手机号
      */
     private String mobile;
@@ -39,7 +34,7 @@ public class SystemUser extends CommonPo {
     /**
      * 密码
      */
-    private String pwd;
+    private String password;
 
     /**
      * 姓名

@@ -20,6 +20,6 @@ public class UserLoginForm {
     @NotNull(message = "密码不能为空")
     private String password;
 
-    @Range(min = 2, max = 5, message = "范围不对")
-    private Integer a = 0;
+//    @Range(min = 2, max = 5, message = "范围不对")
+//    private Integer a = 0;
 }

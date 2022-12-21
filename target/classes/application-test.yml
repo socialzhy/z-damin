@@ -8,7 +8,7 @@ spring:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     database: 0
-  # 不使用redisRepository，如需使用，去掉该配置，默认为true（主要为解决服务启动时有一条日志，有一点强迫症 = =！）
+  # 不使用redisRepository，如需使用，去掉该配置，默认为true（主要为解决服务启动时有一条日志，有亿点点强迫症 = =！）
   data:
     redis:
       repositories:

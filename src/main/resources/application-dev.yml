@@ -26,5 +26,5 @@ mybatis-plus:
   global-config:
     db-config:
       logic-delete-field: is_deleted #需要配置的逻辑删除数据库字段
-      logic-delete-value: 0   #配置逻辑删除字段为1是删除
-      logic-not-delete-value: 1  #配置逻辑删除字段为1是未删除
+      logic-delete-value: 1   #配置逻辑删除字段为1是删除
+      logic-not-delete-value: 0  #配置逻辑删除字段为0是未删除

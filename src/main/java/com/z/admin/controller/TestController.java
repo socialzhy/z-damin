@@ -1,7 +1,16 @@
 package com.z.admin.controller;
 
 import com.z.admin.entity.form.system.UserLoginForm;
+import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.Result;
+import com.z.admin.entity.vo.system.UserLoginVo;
+import com.z.admin.service.ISystemUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +26,11 @@ import javax.validation.Valid;
 @RequestMapping("/test")
 public class TestController {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ISystemUserService userService;
+
     @PostMapping("/xx")
     public void test(@RequestParam("name") String name, HttpSession session) throws Exception {
         System.out.println(session.getAttribute("tok"));
@@ -31,6 +45,24 @@ public class TestController {
 
     @PostMapping("/zz")
     public Result<?> zz() throws Exception {
+        return Result.success();
+    }
+
+
+
+    @PostMapping("/login")
+    public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form) throws Exception {
+        return Result.success(userService.login(form));
+    }
+
+    @PostMapping("/register")
+    public Result<?> register(@Valid @RequestBody UserLoginForm form) throws Exception {
+        SystemUser user = new SystemUser();
+        // 调用加密器将前端传递过来的密码进行加密
+        user.setUsername(form.getUsername());
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
+        // 将用户实体对象添加到数据库
+        userService.save(user);
         return Result.success();
     }
 

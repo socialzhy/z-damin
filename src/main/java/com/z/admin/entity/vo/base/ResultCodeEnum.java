@@ -15,6 +15,13 @@ public enum ResultCodeEnum {
     FAIL(40000, "通用错误码，具体参见message"),
     //endregion
 
+    //region 登录权限相关 40100-40199
+    USERNAME_OR_PASSWORD_ERROR(40100, "用户名或密码错误"),
+    AUTHENTICATION_FAILED(40101, "认证失败"),
+    USER_NOT_EXIST(40102, "用户不存在"),
+    //endregion
+
+
     //region 服务器层错误码 50000-59999
     //重复操作
     REPEAT_OPERATION(50000, "您已经操作过了，请稍等");

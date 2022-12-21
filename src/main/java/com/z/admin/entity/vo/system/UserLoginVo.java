@@ -1,6 +1,8 @@
 package com.z.admin.entity.vo.system;
 
+import com.z.admin.entity.vo.base.BaseVo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author zhy
@@ -8,7 +10,10 @@ import lombok.Data;
  * @date 2022/9/21
  */
 @Data
-public class UserLoginVo {
+@EqualsAndHashCode(callSuper = true)
+public class UserLoginVo extends BaseVo {
+
+    private String username;
 
     private String token;
 }
