@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /**
  * @author zhy
- * @description
+ * @description 登录过滤器
  * @date 2022/12/21
  */
 @Component
@@ -31,7 +31,7 @@ public class LoginFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain) throws ServletException, IOException {
-        // 从请求头中获取token字符串并解析（JwtManager之前文章有详解，这里不多说了）
+        // 从请求头中获取token字符串并解析
         Claims claims = JwtUtil.parse(request.getHeader("Authorization"));
         if (claims != null) {
             // 从`JWT`中提取出之前存储好的用户名

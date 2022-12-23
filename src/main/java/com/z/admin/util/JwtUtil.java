@@ -20,7 +20,7 @@ public class JwtUtil {
     /**
      * 这个秘钥是防止JWT被篡改的关键，随便写什么都好，但决不能泄露
      */
-    private final static String secretKey = "whatever";
+    private final static String secretKey = "lulalalulalalulalulalei";
     /**
      * 过期时间目前设置成1天，这个配置随业务需求而定
      */
@@ -52,7 +52,7 @@ public class JwtUtil {
      */
     public static Claims parse(String token) {
         // 如果是空字符串直接返回null
-        if (StringUtils.isEmpty(token)) {
+        if (ObjectUtils.isEmpty(token)) {
             return null;
         }
 

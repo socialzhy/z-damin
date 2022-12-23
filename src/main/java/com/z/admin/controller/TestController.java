@@ -3,8 +3,10 @@ package com.z.admin.controller;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.Result;
+import com.z.admin.entity.vo.system.UserDetailVo;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.service.ISystemUserService;
+import com.z.admin.util.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +32,8 @@ public class TestController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ISystemUserService userService;
+    @Autowired
+    private ISystemUserService systemUserService;
 
     @PostMapping("/xx")
     public void test(@RequestParam("name") String name, HttpSession session) throws Exception {
@@ -49,12 +53,6 @@ public class TestController {
     }
 
 
-
-    @PostMapping("/login")
-    public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form) throws Exception {
-        return Result.success(userService.login(form));
-    }
-
     @PostMapping("/register")
     public Result<?> register(@Valid @RequestBody UserLoginForm form) throws Exception {
         SystemUser user = new SystemUser();
@@ -65,5 +63,8 @@ public class TestController {
         userService.save(user);
         return Result.success();
     }
+
+
+
 
 }

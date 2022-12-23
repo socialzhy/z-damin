@@ -2,17 +2,21 @@ package com.z.admin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.z.admin.entity.form.system.UserAddForm;
+import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.form.system.UserUpdateForm;
 import com.z.admin.entity.param.system.UserQueryParam;
 import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.BaseVo;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.vo.system.UserDetailVo;
+import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.service.ISystemUserService;
+import com.z.admin.util.LoginUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * 用户管理
@@ -26,6 +30,17 @@ import javax.annotation.Resource;
 public class UserController {
     @Resource
     ISystemUserService systemUserService;
+
+    @PostMapping("/login")
+    public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form){
+        return Result.success(systemUserService.login(form));
+    }
+
+    @GetMapping("/info")
+    public Result<UserDetailVo> info() {
+        SystemUser user = systemUserService.getById(LoginUtil.getLoginUserId());
+        return Result.success(user.toVO(UserDetailVo.class));
+    }
 
     /**
      * 新增用户
