@@ -3,7 +3,7 @@
 CREATE TABLE `system_permission` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'POST' COMMENT '请求方法',
-  `path` varchar(255) NOT NULL DEFAULT '',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '操作路由',
   `type` int NOT NULL DEFAULT '1' COMMENT '1页面权限 2操作权限',
   `parent_id` int NOT NULL DEFAULT '0' COMMENT '权限父节点id',
   `allow_anonymous` tinyint NOT NULL DEFAULT '0' COMMENT '允许匿名访问 0 不允许 1允许',
@@ -17,7 +17,7 @@ CREATE TABLE `system_permission` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uni_method_path` (`method`,`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限表';
 
 
 -- z_admin.system_role definition
