@@ -3,15 +3,8 @@ package com.z.admin.controller;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.Result;
-import com.z.admin.entity.vo.system.UserDetailVo;
-import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.service.ISystemUserService;
-import com.z.admin.util.LoginUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

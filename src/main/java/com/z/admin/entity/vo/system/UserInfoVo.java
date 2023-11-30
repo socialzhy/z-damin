@@ -1,25 +1,48 @@
 package com.z.admin.entity.vo.system;
 
+import com.z.admin.entity.vo.base.BaseVo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author zhy
- * @description
- * @date 2022/9/23
+ * @description 用户信息
+ * @date 2022/10/19
  */
 @Data
-public class UserInfoVo {
+@EqualsAndHashCode(callSuper = true)
+public class UserInfoVo extends BaseVo {
 
-    private String avatar;
+    /**
+     * 用户名
+     */
+    private String username;
 
-    private String introduction;
+    /**
+     * 昵称
+     */
+    private String nickName;
 
-    private String name;
+//    /**
+//     * 角色集合
+//     */
+//    private List<String> roles = List.of("admin");
 
-    private List<String> roles = new ArrayList<>();
+    /**
+     * 角色集合
+     */
+    private List<String> roleList = new ArrayList<>();
 
-    private List<String> permissions = new ArrayList<>();
+    /**
+     * 页面权限
+     */
+    private List<Integer> pagePermissionList = new ArrayList<>();
+
+    /**
+     * 操作权限
+     */
+    private List<Integer> operationPermissionList = new ArrayList<>();
 }
