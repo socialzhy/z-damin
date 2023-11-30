@@ -12,11 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class LoginUtil {
 
-    public static Long getLoginUserId(){
+    public static Long getLoginUserId() {
         try {
             UserDetail user = (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return user.getSystemUser().getId();
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new ServiceException(ResultCodeEnum.AUTHENTICATION_FAILED);
         }
 

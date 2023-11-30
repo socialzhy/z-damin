@@ -26,11 +26,6 @@ public class UserInfoVo extends BaseVo {
      */
     private String nickName;
 
-//    /**
-//     * 角色集合
-//     */
-//    private List<String> roles = List.of("admin");
-
     /**
      * 角色集合
      */

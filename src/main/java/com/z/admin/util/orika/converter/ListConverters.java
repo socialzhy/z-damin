@@ -23,6 +23,28 @@ import static java.util.stream.Collectors.toList;
  */
 public class ListConverters {
 
+    private static NumberFormat createNumberFormatter(Integer scale, RoundingMode mode) {
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMinimumFractionDigits(scale);
+        format.setMaximumFractionDigits(scale);
+        format.setRoundingMode(mode);
+        return format;
+    }
+
+    private static <E> String convertList2String(List<E> source, String delimiter, Function<E, String> transformer) {
+        return source.stream()
+                .filter(Objects::nonNull)
+                .map(transformer)
+                .collect(joining(delimiter));
+    }
+
+    private static <E> List<E> convertString2List(String source, String delimiter, Function<String, E> transformer) {
+        return Arrays.stream(source.split(delimiter))
+                .filter(s -> s != null && !s.isEmpty())
+                .map(transformer)
+                .collect(toList());
+    }
+
     @RequiredArgsConstructor
     public static class ByteListToStringConverter extends BidirectionalConverter<List<Byte>, String> {
 
@@ -153,28 +175,6 @@ public class ListConverters {
             return convertString2List(source, delimiter, BigDecimal::new);
         }
 
-    }
-
-    private static NumberFormat createNumberFormatter(Integer scale, RoundingMode mode) {
-        NumberFormat format = NumberFormat.getInstance();
-        format.setMinimumFractionDigits(scale);
-        format.setMaximumFractionDigits(scale);
-        format.setRoundingMode(mode);
-        return format;
-    }
-
-    private static <E> String convertList2String(List<E> source, String delimiter, Function<E, String> transformer) {
-        return source.stream()
-                .filter(Objects::nonNull)
-                .map(transformer)
-                .collect(joining(delimiter));
-    }
-
-    private static <E> List<E> convertString2List(String source, String delimiter, Function<String, E> transformer) {
-        return Arrays.stream(source.split(delimiter))
-                .filter(s -> s != null && !s.isEmpty())
-                .map(transformer)
-                .collect(toList());
     }
 
 }

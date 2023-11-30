@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.z.admin.security.UserDetail;
 import com.z.admin.dao.SystemUserMapper;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
@@ -13,6 +12,7 @@ import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
+import com.z.admin.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import java.util.Collections;
  * @date 2022/10/17
  */
 @Service
-public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService,UserDetailsService{
+public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService, UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -72,9 +72,9 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     }
 
 
-    private SystemUser getByUsername(String username){
+    private SystemUser getByUsername(String username) {
         LambdaQueryWrapper<SystemUser> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(SystemUser::getUsername,username);
+        wrapper.eq(SystemUser::getUsername, username);
         return this.getOne(wrapper);
     }
 }

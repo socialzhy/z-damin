@@ -36,22 +36,6 @@ public enum ResultCodeEnum {
         this.value = value;
     }
 
-    public Integer getKey() {
-        return key;
-    }
-
-    public void setKey(Integer key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public static Map<Integer, String> valueMap() {
         ResultCodeEnum[] enums = ResultCodeEnum.values();
         Map<Integer, String> resultCodeMap = new HashMap<>(enums.length);
@@ -70,5 +54,21 @@ public enum ResultCodeEnum {
             }
         }
         return null;
+    }
+
+    public Integer getKey() {
+        return key;
+    }
+
+    public void setKey(Integer key) {
+        this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

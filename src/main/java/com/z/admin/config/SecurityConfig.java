@@ -3,7 +3,6 @@ package com.z.admin.config;
 import com.z.admin.filter.LoginFilter;
 import com.z.admin.security.MyEntryPoint;
 import com.z.admin.service.impl.SystemUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhy
  * @description
@@ -24,10 +25,10 @@ import org.springframework.web.cors.CorsUtils;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private SystemUserService userDetailsService;
-    @Autowired
-    private LoginFilter loginFilter;
+    @Resource
+    SystemUserService userDetailsService;
+    @Resource
+    LoginFilter loginFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

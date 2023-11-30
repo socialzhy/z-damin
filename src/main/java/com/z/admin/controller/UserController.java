@@ -11,6 +11,7 @@ import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.vo.system.UserInfoVo;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
+import com.z.admin.service.ISystemRoleService;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.LoginUtil;
 import org.springframework.web.bind.annotation.*;
@@ -30,21 +31,28 @@ import javax.validation.Valid;
 public class UserController {
     @Resource
     ISystemUserService systemUserService;
+    @Resource
+    ISystemRoleService systemRoleService;
 
     @PostMapping("/login")
-    public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form){
+    public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form) {
         return Result.success(systemUserService.login(form));
     }
 
+    /**
+     * 查询用户信息
+     */
     @GetMapping("/info")
     public Result<UserInfoVo> info() {
         SystemUser user = systemUserService.getById(LoginUtil.getLoginUserId());
+
+
         UserInfoVo userInfoVo = user.toVO(UserInfoVo.class);
-        if (userInfoVo.getUsername().equals("editor")){
-            userInfoVo.getPagePermissionList().add(10000);
-            userInfoVo.getOperationPermissionList().add(235);
-            userInfoVo.getRoleList().add("qwert");
-        }
+        //todo 待处理
+        userInfoVo.getPagePermissionList().add(1);
+        userInfoVo.getPagePermissionList().add(2);
+        userInfoVo.getOperationPermissionList().add(235);
+//        userInfoVo.getRoleList().add("qwert");
         return Result.success(userInfoVo);
     }
 

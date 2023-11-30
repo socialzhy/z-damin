@@ -1,6 +1,5 @@
 package com.z.admin.filter;
 
-import com.z.admin.service.ISystemUserService;
 import com.z.admin.service.impl.SystemUserService;
 import com.z.admin.util.JwtUtil;
 import io.jsonwebtoken.Claims;

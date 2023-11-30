@@ -1,8 +1,5 @@
 package com.z.admin.entity.po.system;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.z.admin.entity.po.base.CommonPo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,16 +38,4 @@ public class SystemUser extends CommonPo {
      */
     private String name;
 
-    /**
-     * 是否禁用
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Integer isDisabled;
-
-    /**
-     * 是否删除
-     */
-    @TableLogic
-    @TableField(fill = FieldFill.INSERT)
-    private Integer isDeleted;
 }

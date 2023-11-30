@@ -5,7 +5,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.util.Date;
@@ -52,7 +51,7 @@ public class JwtUtil {
      */
     public static Claims parse(String token) {
         // 如果是空字符串直接返回null
-        if (ObjectUtils.isEmpty(token)) {
+        if (DataUtils.isEmpty(token)) {
             return null;
         }
 
@@ -65,7 +64,7 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (JwtException e) {
-            if (log.isErrorEnabled()){
+            if (log.isErrorEnabled()) {
                 log.error("token解析失败:{}", e.toString());
             }
         }
