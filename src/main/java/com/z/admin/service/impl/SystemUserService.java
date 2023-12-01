@@ -67,7 +67,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         if (user == null) {
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
-        // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合，后面我会讲解）
+        // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合）
         return new UserDetail(user, Collections.emptyList());
     }
 
