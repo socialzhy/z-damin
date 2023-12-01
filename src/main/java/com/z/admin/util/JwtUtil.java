@@ -3,9 +3,12 @@ package com.z.admin.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
 
@@ -19,7 +22,7 @@ public class JwtUtil {
     /**
      * 这个秘钥是防止JWT被篡改的关键，随便写什么都好，但决不能泄露
      */
-    private final static String secretKey = "lulalalulalalulalulalei";
+    private final static SecretKey secretKey = Keys.hmacShaKeyFor("bHVsYWxhbHVsYWxhbHVsYWx1bGFsZWk=".getBytes());
     /**
      * 过期时间目前设置成1天，这个配置随业务需求而定
      */
@@ -34,12 +37,11 @@ public class JwtUtil {
     public static String generate(String userName) {
         // 过期时间
         Date expiryDate = new Date(System.currentTimeMillis() + expiration.toMillis());
-
         return Jwts.builder()
-                .setSubject(userName) // 将userName放进JWT
-                .setIssuedAt(new Date()) // 设置JWT签发时间
-                .setExpiration(expiryDate)  // 设置过期时间
-                .signWith(SignatureAlgorithm.HS512, secretKey) // 设置加密算法和秘钥
+                .subject(userName)// 将userName放进JWT
+                .issuedAt(new Date())// 设置JWT签发时间
+                .expiration(expiryDate)// 设置过期时间
+                .signWith(secretKey)
                 .compact();
     }
 
@@ -54,15 +56,15 @@ public class JwtUtil {
         if (DataUtils.isEmpty(token)) {
             return null;
         }
-
         // 这个Claims对象包含了许多属性，比如签发时间、过期时间以及存放的数据等
         Claims claims = null;
         // 解析失败了会抛出异常，所以我们要捕捉一下。token过期、token非法都会导致解析失败
         try {
             claims = Jwts.parser()
-                    .setSigningKey(secretKey) // 设置秘钥
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .verifyWith(secretKey)
+                    .build()// 设置秘钥
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (JwtException e) {
             if (log.isErrorEnabled()) {
                 log.error("token解析失败:{}", e.toString());
