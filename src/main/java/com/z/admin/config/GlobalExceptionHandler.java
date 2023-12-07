@@ -5,6 +5,8 @@ import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,11 +32,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object handleException(Exception e) {
+    public Result<?> handleException(Exception e) {
         log.error("服务器错误", e);
         return Result.fail(ResultCodeEnum.SERVER_ERROR);
     }
-
 
     /**
      * 自定义错误处理
@@ -42,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ServiceException.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object serviceExceptionHandle(ServiceException e) {
+    public Result<?> serviceExceptionHandle(ServiceException e) {
         log.error("业务逻辑异常: {}", e.getMessage());
         return Result.fail(e.getCode(), e.getMessage());
     }
@@ -53,10 +54,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
+    public Result<?> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         log.error("校验参数异常:{}", message);
         return Result.fail(message);
     }
 
+    /**
+     * 认证失败
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException e) {
+        log.error("认证失败: {}", e.getMessage());
+        return new ResponseEntity<>(Result.fail(ResultCodeEnum.AUTHENTICATION_FAILED), HttpStatus.UNAUTHORIZED);
+    }
 }
