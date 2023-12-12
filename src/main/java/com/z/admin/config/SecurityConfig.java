@@ -5,9 +5,6 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.Customizer;
@@ -19,14 +16,9 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author zhy
@@ -51,7 +43,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 //关闭session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // 将我们自定义的认证过滤器插入到默认的认证过滤器之前
+                // 自定义的认证过滤器插入到默认的认证过滤器之前
                 .addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
@@ -59,8 +51,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许直接访问授权登录接口
                 .requestMatchers(HttpMethod.POST, "/system/user/login", "/test/register").permitAll()
-                // 这里意思是其它所有接口需要认证才能访问
-//                .anyRequest().authenticated()
+                // 其它所有接口需要认证才能访问
                 .anyRequest().access(authorizationManager));
 
         return http.build();
@@ -75,17 +66,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public AccessDecisionVoter<FilterInvocation> accessDecisionProcessor() {
-//        return new AccessDecisionProcessor();
-//    }
-//
-//    @Bean
-//    public AccessDecisionManager accessDecisionManager() {
-//        // 构造一个新的AccessDecisionManager 放入两个投票器
-//        List<AccessDecisionVoter<?>> decisionVoters = Arrays.asList(new WebExpressionVoter(), accessDecisionProcessor());
-//        return new UnanimousBased(decisionVoters);
-//    }
 
 }

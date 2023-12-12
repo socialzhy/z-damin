@@ -11,7 +11,6 @@ import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
-import com.z.admin.exception.ServiceException;
 import com.z.admin.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
@@ -19,11 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -37,10 +34,7 @@ import java.util.Collections;
 public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService, UserDetailsService {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private AuthenticationManager authenticationManager;
-
 
     @Override
     public IPage<UserVo> query(UserQueryParam param) {
@@ -63,23 +57,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         return userLoginVo;
     }
 
-    //    @Override
-//    public UserLoginVo login(UserLoginForm form) {
-//        // 根据用户名查询出用户实体对象
-//        SystemUser user = this.getByUsername(form.getUsername());
-//        // 若没有查到用户 或者 密码校验失败则抛出自定义异常
-//        if (user == null || !passwordEncoder.matches(form.getPassword(), user.getPassword())) {
-//            throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
-//        }
-//
-//        // 需要返回给前端的VO对象
-//        UserLoginVo userLoginVo = user.toVO(UserLoginVo.class);
-//        // 生成JWT，将用户名数据存入其中
-//        userLoginVo.setToken(JwtUtil.generate(user.getUsername()));
-//        return userLoginVo;
-//
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 从数据库中查询出用户实体对象
@@ -91,7 +68,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合）
         return new UserDetail(user, Collections.emptyList());
     }
-
 
     private SystemUser getByUsername(String username) {
         LambdaQueryWrapper<SystemUser> wrapper = new LambdaQueryWrapper<>();

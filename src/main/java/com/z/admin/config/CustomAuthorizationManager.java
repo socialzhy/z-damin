@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 /**
  * @author zhy
- * @description
+ * @description 鉴权处理器
  * @date 2023/12/12
  */
 @Configuration
