@@ -1,4 +1,4 @@
-package com.z.admin.security;
+package com.z.admin.config.security;
 
 import com.z.admin.entity.po.system.SystemUser;
 import lombok.Getter;

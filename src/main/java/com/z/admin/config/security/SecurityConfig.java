@@ -1,4 +1,4 @@
-package com.z.admin.config;
+package com.z.admin.config.security;
 
 import com.z.admin.filter.LoginFilter;
 import jakarta.annotation.Resource;

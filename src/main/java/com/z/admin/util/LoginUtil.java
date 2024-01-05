@@ -2,7 +2,7 @@ package com.z.admin.util;
 
 import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.exception.ServiceException;
-import com.z.admin.security.UserDetail;
+import com.z.admin.config.security.UserDetail;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**

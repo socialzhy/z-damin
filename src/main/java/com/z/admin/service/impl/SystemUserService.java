@@ -11,7 +11,7 @@ import com.z.admin.entity.po.system.SystemUser;
 import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
-import com.z.admin.security.UserDetail;
+import com.z.admin.config.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

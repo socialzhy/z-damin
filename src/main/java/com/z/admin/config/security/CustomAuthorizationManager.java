@@ -1,6 +1,5 @@
-package com.z.admin.config;
+package com.z.admin.config.security;
 
-import com.z.admin.security.UserDetail;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
