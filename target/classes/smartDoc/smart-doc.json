@@ -8,7 +8,7 @@
   "packageFilters": "com.z.admin.controller.*",
   "md5EncryptedHtmlName": false,
   "projectName": "admin",
-  "style":"xt256",
+  "style": "xt256",
   "createDebugPage": true,
   "skipTransientField": true
 }

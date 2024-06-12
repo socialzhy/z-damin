@@ -34,6 +34,10 @@ public class UserController {
     @Resource
     ISystemRoleService systemRoleService;
 
+    /**
+     * 登录
+     * @param form 参数
+     */
     @PostMapping("/login")
     public Result<UserLoginVo> login(@Valid @RequestBody UserLoginForm form) {
         return Result.success(systemUserService.login(form));

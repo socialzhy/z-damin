@@ -25,6 +25,9 @@ public class Result<T> {
      */
     private String msg;
 
+    /**
+     * 业务数据
+     */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 

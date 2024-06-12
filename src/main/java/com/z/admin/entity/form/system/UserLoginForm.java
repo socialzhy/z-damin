@@ -7,18 +7,18 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author zhy
- * @description
+ * @description 登录form
  * @date 2022/9/21
  */
 @Data
 public class UserLoginForm {
 
+    /** 用户名 */
     @NotBlank
     private String username;
 
+    /** 密码 */
     @NotNull(message = "密码不能为空")
     private String password;
 
-//    @Range(min = 2, max = 5, message = "范围不对")
-//    private Integer a = 0;
 }
