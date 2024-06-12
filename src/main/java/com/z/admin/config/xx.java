@@ -1,12 +1,9 @@
 package com.z.admin.config;
 
-import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
-import com.z.admin.entity.po.base.BasePo2;
 import com.z.admin.entity.po.base.CommonPo;
 
 import java.sql.Types;
