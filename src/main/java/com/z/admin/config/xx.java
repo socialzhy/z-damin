@@ -31,10 +31,6 @@ public class xx {
                                 // 自定义类型转换
                                 return DbColumnType.INTEGER;
                             }
-                            if (typeCode == Types.BIGINT) {
-                                // 自定义类型转换
-                                return DbColumnType.LONG;
-                            }
                             return typeRegistry.getColumnType(metaInfo);
                         })
                 )
