@@ -1,7 +1,7 @@
 -- z_admin.system_permission definition
 
 CREATE TABLE `system_permission` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'POST' COMMENT '请求方法',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '操作路由',
   `type` int NOT NULL DEFAULT '1' COMMENT '1页面权限 2操作权限',
@@ -23,7 +23,7 @@ CREATE TABLE `system_permission` (
 -- z_admin.system_role definition
 
 CREATE TABLE `system_role` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '角色名称',
   `parent_id` int NOT NULL DEFAULT '0' COMMENT '权限父节点id',
   `create_by` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
@@ -39,7 +39,7 @@ CREATE TABLE `system_role` (
 -- z_admin.`system_user` definition
 
 CREATE TABLE `system_user` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `mobile` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '手机号',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邮箱',
   `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
@@ -58,7 +58,7 @@ CREATE TABLE `system_user` (
 -- z_admin.system_user_permission definition
 
 CREATE TABLE `system_user_permission` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `user_id` bigint NOT NULL DEFAULT '0' COMMENT '用户id',
   `permission_id` bigint NOT NULL DEFAULT '0' COMMENT '权限id',
   `create_by` int DEFAULT '0' COMMENT '创建人',
@@ -74,7 +74,7 @@ CREATE TABLE `system_user_permission` (
 -- z_admin.system_user_role definition
 
 CREATE TABLE `system_user_role` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `user_id` bigint NOT NULL DEFAULT '0' COMMENT '用户id',
   `role_id` bigint NOT NULL DEFAULT '0' COMMENT '角色id',
   `create_by` int NOT NULL DEFAULT '0' COMMENT '创建人',

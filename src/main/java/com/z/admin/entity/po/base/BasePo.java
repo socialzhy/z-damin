@@ -31,7 +31,7 @@ public class BasePo implements Serializable {
      * 创建操作人
      */
     @TableField(fill = FieldFill.INSERT)
-    private Integer createBy;
+    private Long createBy;
 
     /**
      * 插入时间
@@ -43,7 +43,7 @@ public class BasePo implements Serializable {
      * 更新操作人
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Integer updateBy;
+    private Long updateBy;
 
     /**
      * 修改时间
