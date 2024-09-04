@@ -1,7 +1,7 @@
 package com.z.admin.entity.param.system;
 
 import com.z.admin.entity.param.base.BasePageParam;
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,6 +1,6 @@
 package com.z.admin.security;
 
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

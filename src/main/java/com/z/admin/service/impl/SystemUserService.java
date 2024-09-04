@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.z.admin.dao.SystemUserMapper;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;

@@ -1,4 +1,4 @@
-package com.z.admin.entity.po.system;
+package com.z.admin.entity.po;
 
 import com.z.admin.entity.po.base.CommonPo;
 import lombok.Data;

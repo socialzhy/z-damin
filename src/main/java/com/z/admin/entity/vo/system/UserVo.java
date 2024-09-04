@@ -1,6 +1,6 @@
 package com.z.admin.entity.vo.system;
 
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import com.z.admin.util.BeanUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -5,7 +5,7 @@ import com.z.admin.entity.form.system.UserAddForm;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.form.system.UserUpdateForm;
 import com.z.admin.entity.param.system.UserQueryParam;
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.BaseVo;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.vo.system.UserInfoVo;

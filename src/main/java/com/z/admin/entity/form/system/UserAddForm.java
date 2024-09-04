@@ -1,7 +1,7 @@
 package com.z.admin.entity.form.system;
 
 import com.z.admin.entity.form.base.BaseForm;
-import com.z.admin.entity.po.system.SystemUser;
+import com.z.admin.entity.po.SystemUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
