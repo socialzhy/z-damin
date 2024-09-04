@@ -7,7 +7,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 角色
+ * 用户权限关联
  * </p>
  *
  * @author system
@@ -15,16 +15,16 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("system_role")
-public class SystemRole extends CommonPo {
+@TableName("system_user_permission")
+public class SystemUserPermission extends CommonPo {
 
     /**
-     * 角色名称
+     * 用户id
      */
-    private String name;
+    private Long userId;
 
     /**
-     * 权限父节点id
+     * 权限id
      */
-    private Integer parentId;
+    private Long permissionId;
 }

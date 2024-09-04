@@ -1,16 +1,21 @@
 package com.z.admin.entity.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.z.admin.entity.po.base.CommonPo;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * @author zhy
- * @date 2022-10-17
- * @description 用户类实体
+ * <p>
+ * 
+ * </p>
+ *
+ * @author system
+ * @since 2024-09-04
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@TableName("system_user")
 public class SystemUser extends CommonPo {
 
     /**
@@ -19,14 +24,14 @@ public class SystemUser extends CommonPo {
     private String mobile;
 
     /**
-     * 用户名
-     */
-    private String username;
-
-    /**
      * 邮箱
      */
     private String email;
+
+    /**
+     * 用户名
+     */
+    private String username;
 
     /**
      * 密码
@@ -37,5 +42,4 @@ public class SystemUser extends CommonPo {
      * 姓名
      */
     private String name;
-
 }

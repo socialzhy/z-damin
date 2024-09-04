@@ -41,6 +41,8 @@ public class xx {
                                 .entity("entity.po")
                                 .mapper("dao")
                                 .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir")+"/src/main/resources/mybatis")) // 设置mapperXml生成路径
+                                //配置不生成controller 和 controllerBuilder().disable()需要同时设置
+                                .pathInfo(Collections.singletonMap(OutputFile.controller, null))
                 )
                 .strategyConfig(builder ->
                                 //po配置
@@ -49,13 +51,17 @@ public class xx {
                                         .superClass(CommonPo.class)
                                         //设置父类字段（数据库中的字段），为了在子类中忽略这些字段的生成
                                         .addSuperEntityColumns("id","create_by","create_time","update_by","update_time","create_time","is_disabled","is_deleted")
-                                        //覆盖已存在的
-                                        .enableFileOverride()
                                         .disableSerialVersionUID()
                                         .enableLombok()
-//                                        .controllerBuilder()
-//                                        .enableRestStyle()// 启用 REST 风格
-//                                        .enableHyphenStyle()
+
+                                        //controller配置
+                                        .controllerBuilder()
+                                        //不生成controller
+                                        .disable()
+
+                                        //service配置
+                                        .serviceBuilder()
+                                        .formatServiceImplFileName("%sService")
 //                        builder.addInclude("t_simple") // 设置需要生成的表名
 //                                .addTablePrefix("t_", "c_") // 设置过滤表前缀
                 )
