@@ -11,9 +11,9 @@ import java.util.Collections;
 
 /**
  * @author zhy
- * @description
+ * @description 代码生成
  */
-public class xx {
+public class CodeGeneration {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/z_admin?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true";
         String username = "root";
@@ -51,8 +51,12 @@ public class xx {
                                         .superClass(CommonPo.class)
                                         //设置父类字段（数据库中的字段），为了在子类中忽略这些字段的生成
                                         .addSuperEntityColumns("id","create_by","create_time","update_by","update_time","create_time","is_disabled","is_deleted")
+                                        //不生成序列化id
                                         .disableSerialVersionUID()
+                                        //使用lombok
                                         .enableLombok()
+                                        //覆盖已生成文件
+                                        .enableFileOverride()
 
                                         //controller配置
                                         .controllerBuilder()
