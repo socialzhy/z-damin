@@ -21,7 +21,7 @@ public class CodeGeneration {
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("system") // 设置作者
-                            .outputDir(System.getProperty("user.dir")+"/src/main/java") // 指定输出目录
+                            .outputDir(System.getProperty("user.dir") + "/src/main/java") // 指定输出目录
                             .disableOpenDir();
                 })
                 .dataSourceConfig(builder ->
@@ -40,7 +40,7 @@ public class CodeGeneration {
                         builder.parent("com.z.admin")
                                 .entity("entity.po")
                                 .mapper("dao")
-                                .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir")+"/src/main/resources/mybatis")) // 设置mapperXml生成路径
+                                .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mybatis")) // 设置mapperXml生成路径
                                 //配置不生成controller 和 controllerBuilder().disable()需要同时设置
                                 .pathInfo(Collections.singletonMap(OutputFile.controller, null))
                 )
@@ -50,7 +50,7 @@ public class CodeGeneration {
                                         //设置po父类
                                         .superClass(CommonPo.class)
                                         //设置父类字段（数据库中的字段），为了在子类中忽略这些字段的生成
-                                        .addSuperEntityColumns("id","create_by","create_time","update_by","update_time","create_time","is_disabled","is_deleted")
+                                        .addSuperEntityColumns("id", "create_by", "create_time", "update_by", "update_time", "create_time", "is_disabled", "is_deleted")
                                         //不生成序列化id
                                         .disableSerialVersionUID()
                                         //使用lombok

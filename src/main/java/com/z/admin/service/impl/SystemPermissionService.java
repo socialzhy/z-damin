@@ -1,9 +1,9 @@
 package com.z.admin.service.impl;
 
-import com.z.admin.entity.po.SystemPermission;
-import com.z.admin.dao.SystemPermissionMapper;
-import com.z.admin.service.ISystemPermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.z.admin.dao.SystemPermissionMapper;
+import com.z.admin.entity.po.SystemPermission;
+import com.z.admin.service.ISystemPermissionService;
 import org.springframework.stereotype.Service;
 
 /**

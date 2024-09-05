@@ -13,9 +13,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class UserLoginVo extends BaseVo {
 
-    /** 用户名 */
+    /**
+     * 用户名
+     */
     private String username;
 
-    /** token */
+    /**
+     * token
+     */
     private String token;
 }

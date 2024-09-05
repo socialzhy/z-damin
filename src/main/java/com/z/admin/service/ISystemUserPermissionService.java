@@ -1,7 +1,7 @@
 package com.z.admin.service;
 
-import com.z.admin.entity.po.SystemUserPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.z.admin.entity.po.SystemUserPermission;
 
 /**
  * <p>

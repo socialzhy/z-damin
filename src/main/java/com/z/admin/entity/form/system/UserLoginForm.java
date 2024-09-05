@@ -13,11 +13,15 @@ import javax.validation.constraints.NotNull;
 @Data
 public class UserLoginForm {
 
-    /** 用户名 */
+    /**
+     * 用户名
+     */
     @NotBlank
     private String username;
 
-    /** 密码 */
+    /**
+     * 密码
+     */
     @NotNull(message = "密码不能为空")
     private String password;
 
