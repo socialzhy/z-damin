@@ -15,7 +15,7 @@ import com.z.admin.exception.ServiceException;
 import com.z.admin.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,7 +32,7 @@ import java.util.Collections;
 @Service
 public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService, UserDetailsService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
 

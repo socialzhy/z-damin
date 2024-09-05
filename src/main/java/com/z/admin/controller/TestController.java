@@ -4,13 +4,11 @@ import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.service.ISystemUserService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 
 /**
  * @author zhy
@@ -57,5 +55,8 @@ public class TestController {
         return Result.success();
     }
 
-
+    @GetMapping("/test")
+    public void test() {
+        System.out.println("success!!!");
+    }
 }

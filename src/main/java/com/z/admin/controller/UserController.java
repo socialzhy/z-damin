@@ -14,10 +14,9 @@ import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.service.ISystemRoleService;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.LoginUtil;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
 
 /**
  * 用户管理

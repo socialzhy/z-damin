@@ -3,6 +3,12 @@ package com.z.admin.filter;
 import com.z.admin.service.impl.SystemUserService;
 import com.z.admin.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,12 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.Resource;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 /**
@@ -29,7 +29,7 @@ public class LoginFilter extends OncePerRequestFilter {
     private SystemUserService systemUserService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain chain) throws ServletException, IOException {
         // 从请求头中获取token字符串并解析
         Claims claims = JwtUtil.parse(request.getHeader("Authorization"));
         if (claims != null) {
@@ -42,6 +42,7 @@ public class LoginFilter extends OncePerRequestFilter {
             // 将认证对象放到上下文中
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
         chain.doFilter(request, response);
     }
 }

@@ -3,9 +3,9 @@ package com.z.admin.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.util.Date;
 
@@ -17,13 +17,14 @@ import java.util.Date;
 @Slf4j
 public class JwtUtil {
     /**
-     * 这个秘钥是防止JWT被篡改的关键，随便写什么都好，但决不能泄露
-     */
-    private final static String secretKey = "lulalalulalalulalulalei";
-    /**
      * 过期时间目前设置成1天，这个配置随业务需求而定
      */
     private final static Duration expiration = Duration.ofDays(1);
+
+    /**
+     * 随机key，jwt的生成和解密都是根据这个key进行处理
+     */
+    private static final SecretKey SECRET_KEY = Jwts.SIG.HS512.key().build();
 
     /**
      * 生成JWT
@@ -36,10 +37,11 @@ public class JwtUtil {
         Date expiryDate = new Date(System.currentTimeMillis() + expiration.toMillis());
 
         return Jwts.builder()
-                .setSubject(userName) // 将userName放进JWT
-                .setIssuedAt(new Date()) // 设置JWT签发时间
-                .setExpiration(expiryDate)  // 设置过期时间
-                .signWith(SignatureAlgorithm.HS512, secretKey) // 设置加密算法和秘钥
+                .subject(userName)
+                .expiration(expiryDate)
+                .signWith(SECRET_KEY)
+                //可以自定义map属性放进去
+//                .claims()
                 .compact();
     }
 
@@ -59,10 +61,8 @@ public class JwtUtil {
         Claims claims = null;
         // 解析失败了会抛出异常，所以我们要捕捉一下。token过期、token非法都会导致解析失败
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secretKey) // 设置秘钥
-                    .parseClaimsJws(token)
-                    .getBody();
+            claims = Jwts.parser().verifyWith(SECRET_KEY).build().parseSignedClaims(token).getPayload();
+
         } catch (JwtException e) {
             if (log.isErrorEnabled()) {
                 log.error("token解析失败:{}", e.toString());

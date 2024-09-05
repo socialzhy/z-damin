@@ -3,72 +3,110 @@ package com.z.admin.config;
 import com.z.admin.filter.LoginFilter;
 import com.z.admin.security.MyEntryPoint;
 import com.z.admin.service.impl.SystemUserService;
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 /**
- * @author zhy
- * @description
- * @date 2022/12/21
+ *
  */
+@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Resource
     SystemUserService userDetailsService;
     @Resource
     LoginFilter loginFilter;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口（这里不展开细讲了，感兴趣的自行了解）
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+    // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // 关闭csrf和frameOptions
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+
         // 开启跨域以便前端调用接口
-        http.cors();
-        //关闭session
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // 将我们自定义的认证过滤器插入到默认的认证过滤器之前
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // 自定义 CORS 配置
+
+        // 关闭session管理
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // 将自定义的认证过滤器插入到默认的认证过滤器之前
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护
-        http.authorizeRequests()
-                // 注意这里，是允许前端跨域联调的一个必要配置
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                // 指定某些接口不需要通过验证即可访问。登陆、注册接口肯定是不需要认证的
-                .antMatchers("/system/user/login", "/test/register").permitAll()
-                // 这里意思是其它所有接口需要认证才能访问
-                .anyRequest().authenticated()
+        // 配置认证规则
+        http.authorizeHttpRequests(authorize -> authorize
+                        // 允许跨域预检请求
+                        .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                        // 指定不需要认证的接口
+                        .requestMatchers("/system/user/login", "/test/register").permitAll()
+                        // 其他接口需要认证
+                        .anyRequest().authenticated()
+                )
                 // 指定认证错误处理器
-                .and().exceptionHandling().authenticationEntryPoint(new MyEntryPoint());
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(new MyEntryPoint()));
+
+        return http.build();
+    }
+
+    // 自定义 CORS 配置
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*"));  // 允许所有来源
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 允许的 HTTP 方法
+        configuration.setAllowedHeaders(List.of("*")); // 允许的请求头
+        configuration.setAllowCredentials(true); // 是否允许携带认证信息（cookies）
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // 对所有路径生效
+        return source;
     }
 
     @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(this.userDetailsService);
+        // 设置密码编辑器
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 指定UserDetailService和加密器
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        // 调用 JwtUserDetailService实例执行实际校验
+//        return username -> userDetailsService.loadUserByUsername(username);
+//    }
 
+    // 密码加密器配置
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 }

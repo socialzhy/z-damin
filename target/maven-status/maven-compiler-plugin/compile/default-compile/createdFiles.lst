@@ -1,0 +1,13 @@
+com/z/admin/config/CodeGeneration.class
+com/z/admin/service/impl/SystemUserPermissionService.class
+com/z/admin/service/ISystemUserPermissionService.class
+com/z/admin/service/ISystemPermissionService.class
+com/z/admin/entity/po/SystemUserPermission.class
+com/z/admin/service/ISystemUserRoleService.class
+com/z/admin/entity/po/SystemPermission.class
+com/z/admin/service/impl/SystemPermissionService.class
+com/z/admin/dao/SystemUserRoleMapper.class
+com/z/admin/service/impl/SystemUserRoleService.class
+com/z/admin/entity/po/SystemUserRole.class
+com/z/admin/dao/SystemPermissionMapper.class
+com/z/admin/dao/SystemUserPermissionMapper.class

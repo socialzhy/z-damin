@@ -2,6 +2,7 @@ package com.z.admin.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.z.admin.entity.po.SystemUserRole;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.z.admin.entity.po.SystemUserRole;
  * @author system
  * @since 2024-09-04
  */
+@Mapper
 public interface SystemUserRoleMapper extends BaseMapper<SystemUserRole> {
 
 }

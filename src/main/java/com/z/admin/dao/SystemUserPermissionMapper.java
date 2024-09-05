@@ -2,6 +2,7 @@ package com.z.admin.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.z.admin.entity.po.SystemUserPermission;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.z.admin.entity.po.SystemUserPermission;
  * @author system
  * @since 2024-09-04
  */
+@Mapper
 public interface SystemUserPermissionMapper extends BaseMapper<SystemUserPermission> {
 
 }

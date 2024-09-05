@@ -2,10 +2,9 @@ package com.z.admin.entity.form.system;
 
 import com.z.admin.entity.form.base.BaseForm;
 import com.z.admin.entity.po.SystemUser;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.validation.constraints.Email;
 
 /**
  * @author zhy
