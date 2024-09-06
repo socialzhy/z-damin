@@ -35,7 +35,6 @@ public class GlobalExceptionHandler {
         return Result.fail(ResultCodeEnum.SERVER_ERROR);
     }
 
-
     /**
      * 自定义错误处理
      */
