@@ -1,1 +1,3 @@
 com/z/admin/ZAdminApplicationTests.class
+com/z/admin/generation/MysqlProperty.class
+com/z/admin/generation/CodeGenerationTest.class
