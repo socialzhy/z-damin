@@ -23,7 +23,7 @@ public class CodeGeneration {
                 .globalConfig(builder -> {
                     builder.author("system") // 设置作者
                             .outputDir(System.getProperty("user.dir") + "/src/main/java") // 指定输出目录
-                            .disableOpenDir();
+                            .disableOpenDir(); //生成完不打开文件夹
                 })
                 .dataSourceConfig(builder ->
                         builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
@@ -43,7 +43,7 @@ public class CodeGeneration {
                                 .mapper("dao")
                                 .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mybatis")) // 设置mapperXml生成路径
                                 //配置不生成controller 和 controllerBuilder().disable()需要同时设置
-                                .pathInfo(Collections.singletonMap(OutputFile.controller, null))
+//                                .pathInfo(Collections.singletonMap(OutputFile.controller, null))
                 )
                 .strategyConfig(builder ->
                                 //po配置
@@ -70,9 +70,6 @@ public class CodeGeneration {
 
                                         //mapper配置 生成@Mapper注解
                                         .mapperBuilder()
-                                        .mapperAnnotation(Mapper.class)
-//                        builder.addInclude("t_simple") // 设置需要生成的表名
-//                                .addTablePrefix("t_", "c_") // 设置过滤表前缀
                 )
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();

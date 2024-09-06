@@ -15,4 +15,5 @@ spring:
         enabled: false
 mybatis-plus:
   configuration:
+    # sql输出
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
