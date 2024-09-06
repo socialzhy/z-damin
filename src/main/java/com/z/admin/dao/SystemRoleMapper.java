@@ -1,14 +1,18 @@
 package com.z.admin.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.z.admin.entity.po.SystemRole;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author zhy
- * @description 系统角色mapper
- * @date 2023/11/30
+ * <p>
+ * 角色 Mapper 接口
+ * </p>
+ *
+ * @author system
+ * @since 2024-09-06
  */
 @Mapper
 public interface SystemRoleMapper extends BaseMapper<SystemRole> {
+
 }

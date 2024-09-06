@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.z.admin.entity.po.base.CommonPo;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.Types;
 import java.util.Collections;
@@ -66,6 +67,10 @@ public class CodeGeneration {
                                         //service配置
                                         .serviceBuilder()
                                         .formatServiceImplFileName("%sService")
+
+                                        //mapper配置 生成@Mapper注解
+                                        .mapperBuilder()
+                                        .mapperAnnotation(Mapper.class)
 //                        builder.addInclude("t_simple") // 设置需要生成的表名
 //                                .addTablePrefix("t_", "c_") // 设置过滤表前缀
                 )

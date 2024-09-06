@@ -11,3 +11,4 @@ com/z/admin/service/impl/SystemUserRoleService.class
 com/z/admin/entity/po/SystemUserRole.class
 com/z/admin/dao/SystemPermissionMapper.class
 com/z/admin/dao/SystemUserPermissionMapper.class
+com/z/admin/controller/TestController.class
