@@ -1,7 +1,9 @@
 package com.z.admin.config;
 
+import com.z.admin.entity.po.SystemPermission;
 import com.z.admin.filter.LoginFilter;
 import com.z.admin.security.MyEntryPoint;
+import com.z.admin.service.ISystemPermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +34,8 @@ public class SecurityConfig {
 
     @Resource
     LoginFilter loginFilter;
+    @Resource
+    ISystemPermissionService permissionService;
 
     // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
     @Bean
@@ -50,13 +54,21 @@ public class SecurityConfig {
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 配置认证规则
-        http.authorizeHttpRequests(authorize -> authorize
-                        // 允许跨域预检请求
-                        .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                        // 指定不需要认证的接口
-                        .requestMatchers("/system/user/login", "/test/register").permitAll()
-                        // 其他接口需要认证
-                        .anyRequest().authenticated()
+        http.authorizeHttpRequests(authorize -> {
+                    List<SystemPermission> permissionList = permissionService.list();
+                    for (SystemPermission permission : permissionList) {
+                        authorize.requestMatchers(permission.getPath())
+                                .hasAnyAuthority("0",permission.getId().toString());
+                    }
+
+                    authorize
+                            // 允许跨域预检请求
+                            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                            // 指定不需要认证的接口
+                            .requestMatchers("/system/user/login", "/test/register").permitAll()
+                            // 其他接口需要认证
+                            .anyRequest().authenticated();
+                        }
                 )
                 // 指定认证错误处理器
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new MyEntryPoint()));

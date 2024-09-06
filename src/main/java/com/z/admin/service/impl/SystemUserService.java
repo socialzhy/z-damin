@@ -16,6 +16,7 @@ import com.z.admin.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
 import jakarta.annotation.Resource;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author zhy
@@ -68,7 +70,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
         // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合，后面我会讲解）
-        return new UserDetail(user, Collections.emptyList());
+        return new UserDetail(user, List.of(new SimpleGrantedAuthority("4")));
     }
 
 
