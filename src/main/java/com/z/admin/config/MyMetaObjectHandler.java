@@ -22,8 +22,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     private static final String FIELD_IS_DISABLED = "isDisabled";
     private static final String FIELD_IS_DELETED = "isDeleted";
 
-
-    //使用mp实现添加操作,这个方法会执行,metaObject元数据(表中的名字,表中的字段) todo 操作人待处理
     @Override
     public void insertFill(MetaObject metaObject) {
         Object createBy = this.getFieldValByName(FIELD_CREATE_BY, metaObject);
@@ -32,7 +30,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object isDeleted = this.getFieldValByName(FIELD_IS_DELETED, metaObject);
         //根据名称设置属性值
         if (Objects.isNull(createBy)) {
-            this.setFieldValByName(FIELD_CREATE_BY, 1111, metaObject);
+            this.setFieldValByName(FIELD_CREATE_BY, 0L, metaObject);
         }
         if (Objects.isNull(createTime)) {
             this.setFieldValByName(FIELD_CREATE_TIME, LocalDateTime.now(), metaObject);
@@ -53,7 +51,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object updateBy = this.getFieldValByName(FIELD_UPDATE_BY, metaObject);
         Object updateTime = this.getFieldValByName(FIELD_UPDATE_TIME, metaObject);
         if (Objects.isNull(updateBy)) {
-            this.setFieldValByName(FIELD_UPDATE_BY, 1111, metaObject);
+            this.setFieldValByName(FIELD_UPDATE_BY, 0L, metaObject);
         }
         if (Objects.isNull(updateTime)) {
             this.setFieldValByName(FIELD_UPDATE_TIME, LocalDateTime.now(), metaObject);

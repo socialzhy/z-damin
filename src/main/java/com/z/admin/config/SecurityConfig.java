@@ -2,13 +2,10 @@ package com.z.admin.config;
 
 import com.z.admin.filter.LoginFilter;
 import com.z.admin.security.MyEntryPoint;
-import com.z.admin.service.impl.SystemUserService;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,8 +30,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Resource
-    SystemUserService userDetailsService;
     @Resource
     LoginFilter loginFilter;
 
@@ -83,27 +78,13 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(this.userDetailsService);
-        // 设置密码编辑器
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        // 调用 JwtUserDetailService实例执行实际校验
-//        return username -> userDetailsService.loadUserByUsername(username);
-//    }
-
     // 密码加密器配置
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // 使用security的AuthenticationManager
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

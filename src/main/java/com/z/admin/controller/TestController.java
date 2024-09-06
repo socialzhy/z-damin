@@ -4,9 +4,9 @@ import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.service.ISystemUserService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,33 +19,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
-    @Autowired
+    @Resource
     private ISystemUserService userService;
-    @Autowired
-    private ISystemUserService systemUserService;
 
     @PostMapping("/xx")
-    public void test(@RequestParam("name") String name, HttpSession session) throws Exception {
+    public void test(@RequestParam("name") String name, HttpSession session) {
         System.out.println(session.getAttribute("tok"));
         System.out.println(name);
         session.setAttribute("tok", "12312131");
     }
 
     @PostMapping("/yy")
-    public void yy(@Valid @RequestBody UserLoginForm form) throws Exception {
+    public void yy(@Valid @RequestBody UserLoginForm form) {
         System.out.println(form);
     }
 
     @PostMapping("/zz")
-    public Result<?> zz() throws Exception {
+    public Result<?> zz() {
         return Result.success();
     }
 
 
     @PostMapping("/register")
-    public Result<?> register(@Valid @RequestBody UserLoginForm form) throws Exception {
+    public Result<?> register(@Valid @RequestBody UserLoginForm form) {
         SystemUser user = new SystemUser();
         // 调用加密器将前端传递过来的密码进行加密
         user.setUsername(form.getUsername());
@@ -57,6 +55,8 @@ public class TestController {
 
     @GetMapping("/test")
     public void test() {
+        Thread thread = Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!"));
+        thread.start();
         System.out.println("success!!!");
     }
 }
