@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 09/09/2024 16:40:52
+ Date: 09/09/2024 17:17:29
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `system_permission` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`,`parent_id`) USING BTREE,
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uni_method_path` (`method`,`path`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限表';
 
@@ -65,7 +65,7 @@ CREATE TABLE `system_role` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`,`parent_id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色';
 
 -- ----------------------------
@@ -89,7 +89,7 @@ CREATE TABLE `system_role_permission` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`,`role_id`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -135,12 +135,12 @@ CREATE TABLE `system_user_permission` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `user_id` bigint NOT NULL DEFAULT '0' COMMENT '用户id',
   `permission_id` bigint NOT NULL DEFAULT '0' COMMENT '权限id',
-  `create_by` bigint DEFAULT '0' COMMENT '创建人',
+  `create_by` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_by` bigint DEFAULT '0' COMMENT '修改人',
+  `update_by` bigint NOT NULL DEFAULT '0' COMMENT '修改人',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `is_disabled` tinyint(1) DEFAULT '0' COMMENT '是否禁用',
-  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '是否删除',
+  `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户权限关联';
 

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.z.admin.entity.po.base.CommonPo;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -76,6 +77,7 @@ public class CodeGenerationTest {
 
                                 //mapper配置 生成@Mapper注解
                                 .mapperBuilder()
+                                .mapperAnnotation(Mapper.class)
                 )
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();

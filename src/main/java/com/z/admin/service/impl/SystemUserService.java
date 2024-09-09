@@ -13,7 +13,7 @@ import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
 import com.z.admin.security.UserDetail;
-import com.z.admin.service.ISystemUserService;
+import com.z.admin.service.*;
 import com.z.admin.util.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +35,14 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 
     @Resource
     private PasswordEncoder passwordEncoder;
+    @Resource
+    private ISystemUserRoleService userRoleService;
+    @Resource
+    private ISystemRoleService roleService;
+    @Resource
+    private ISystemRolePermissionService rolePermissionService;
+    @Resource
+    private ISystemPermissionService permissionService;
 
 
     @Override
@@ -68,6 +76,9 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         if (user == null) {
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
+
+        this.queryUserPermission(user.getId());
+
         // 认证成功，返回自定义的UserDetail对象
         return new UserDetail(user, List.of(new SimpleGrantedAuthority("8")));
     }
@@ -77,5 +88,10 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         LambdaQueryWrapper<SystemUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SystemUser::getUsername, username);
         return this.getOne(wrapper);
+    }
+
+    private List<Long> queryUserPermission(Long userId){
+        List<Long> roleIdList = this.userRoleService.queryRoleByUserId(userId);
+        return null;
     }
 }

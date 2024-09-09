@@ -11,7 +11,7 @@ import lombok.Setter;
  * </p>
  *
  * @author system
- * @since 2024-09-06
+ * @since 2024-09-09
  */
 @Getter
 @Setter
@@ -29,14 +29,14 @@ public class SystemPermission extends CommonPo {
     private String path;
 
     /**
-     * 1页面权限 2操作权限
+     * 0超管权限 1页面权限 2操作权限
      */
     private Integer type;
 
     /**
      * 权限父节点id
      */
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 允许匿名访问 0 不允许 1允许
