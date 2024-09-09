@@ -65,12 +65,12 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 从数据库中查询出用户实体对象
         SystemUser user = this.getByUsername(username);
-        // 若没查询到一定要抛出该异常，这样才能被Spring Security的错误处理器处理
+        // 没查询到需要抛出该异常，这样才能被Spring Security的错误处理器处理
         if (user == null) {
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
-        // 走到这代表查询到了实体对象，那就返回我们自定义的UserDetail对象（这里权限暂时放个空集合，后面我会讲解）
-        return new UserDetail(user, List.of(new SimpleGrantedAuthority("4")));
+        // 认证成功，返回自定义的UserDetail对象
+        return new UserDetail(user, List.of(new SimpleGrantedAuthority("8")));
     }
 
 

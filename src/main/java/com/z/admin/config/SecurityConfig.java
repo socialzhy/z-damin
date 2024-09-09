@@ -33,9 +33,9 @@ import java.util.List;
 public class SecurityConfig {
 
     @Resource
-    LoginFilter loginFilter;
+    private LoginFilter loginFilter;
     @Resource
-    ISystemPermissionService permissionService;
+    private ISystemPermissionService permissionService;
 
     // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
     @Bean
@@ -55,21 +55,24 @@ public class SecurityConfig {
 
         // 配置认证规则
         http.authorizeHttpRequests(authorize -> {
-                    List<SystemPermission> permissionList = permissionService.list();
+                    // 放行登录和注册接口（以及其他不需要认证的接口）
+                    authorize.requestMatchers("/system/user/login", "/test/register").permitAll()
+                            // 允许预检请求
+                            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
+
+                    // 允许超级管理员访问所有路径
+                    authorize.requestMatchers("/**").hasAuthority("-1");
+
+                    // 动态加载自定义权限配置
+                    List<SystemPermission> permissionList = permissionService.queryOperationalPermission();
                     for (SystemPermission permission : permissionList) {
                         authorize.requestMatchers(permission.getPath())
-                                .hasAnyAuthority("0",permission.getId().toString());
+                                .hasAuthority(permission.getId().toString());
                     }
 
-                    authorize
-                            // 允许跨域预检请求
-                            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                            // 指定不需要认证的接口
-                            .requestMatchers("/system/user/login", "/test/register").permitAll()
-                            // 其他接口需要认证
-                            .anyRequest().authenticated();
-                        }
-                )
+                    // 其他请求都需要认证
+                    authorize.anyRequest().authenticated();
+                })
                 // 指定认证错误处理器
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(new MyEntryPoint()));
 
@@ -83,7 +86,6 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("*"));  // 允许所有来源
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 允许的 HTTP 方法
         configuration.setAllowedHeaders(List.of("*")); // 允许的请求头
-        configuration.setAllowCredentials(true); // 是否允许携带认证信息（cookies）
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 对所有路径生效
