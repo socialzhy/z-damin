@@ -8,7 +8,7 @@ import com.z.admin.dao.SystemUserMapper;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
 import com.z.admin.entity.po.SystemUser;
-import com.z.admin.entity.vo.base.ResultCodeEnum;
+import com.z.admin.entity.enums.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

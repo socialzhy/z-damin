@@ -2,6 +2,7 @@ package com.z.admin.entity.vo.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.z.admin.entity.enums.ResultCodeEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

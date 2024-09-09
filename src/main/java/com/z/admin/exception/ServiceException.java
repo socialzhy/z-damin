@@ -1,6 +1,6 @@
 package com.z.admin.exception;
 
-import com.z.admin.entity.vo.base.ResultCodeEnum;
+import com.z.admin.entity.enums.ResultCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

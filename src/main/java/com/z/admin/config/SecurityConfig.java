@@ -60,6 +60,9 @@ public class SecurityConfig {
                             // 允许预检请求
                             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
 
+                    // 只要登录就可以访问的接口
+                    authorize.requestMatchers("/system/user/info").authenticated();
+
                     // 允许超级管理员访问所有路径
                     authorize.requestMatchers("/**").hasAuthority("-1");
 
