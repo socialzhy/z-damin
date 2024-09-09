@@ -53,8 +53,9 @@ public class UserController {
 
         UserInfoVo userInfoVo = user.toVO(UserInfoVo.class);
         //todo 待处理
+//        userInfoVo.getPagePermissionList().add(1);
+//        userInfoVo.getPagePermissionList().add(2);
         userInfoVo.getPagePermissionList().add(1);
-        userInfoVo.getPagePermissionList().add(2);
         userInfoVo.getOperationPermissionList().add(235);
 //        userInfoVo.getRoleList().add("qwert");
         return Result.success(userInfoVo);

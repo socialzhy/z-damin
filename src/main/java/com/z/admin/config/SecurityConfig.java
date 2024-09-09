@@ -37,6 +37,9 @@ public class SecurityConfig {
     @Resource
     private ISystemPermissionService permissionService;
 
+    /** 超级管理员权限 */
+    private final String SUPPER_ADMIN_AUTH = "-1";
+
     // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,7 +67,7 @@ public class SecurityConfig {
                     authorize.requestMatchers("/system/user/info").authenticated();
 
                     // 允许超级管理员访问所有路径
-                    authorize.requestMatchers("/**").hasAuthority("-1");
+                    authorize.requestMatchers("/**").hasAuthority(SUPPER_ADMIN_AUTH);
 
                     // 动态加载自定义权限配置
                     List<SystemPermission> permissionList = permissionService.queryOperationalPermission();
