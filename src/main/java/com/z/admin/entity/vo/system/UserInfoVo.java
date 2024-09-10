@@ -32,12 +32,7 @@ public class UserInfoVo extends BaseVo {
     private List<String> roleList = new ArrayList<>();
 
     /**
-     * 页面权限
+     * 权限集合
      */
-    private List<Integer> pagePermissionList = new ArrayList<>();
-
-    /**
-     * 操作权限
-     */
-    private List<Integer> operationPermissionList = new ArrayList<>();
+    private List<Long> permissionList = new ArrayList<>();
 }

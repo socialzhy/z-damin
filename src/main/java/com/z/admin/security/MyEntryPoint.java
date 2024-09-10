@@ -25,6 +25,5 @@ public class MyEntryPoint implements AuthenticationEntryPoint {
         out.write(new ObjectMapper().writeValueAsString(Result.fail(ResultCodeEnum.AUTHENTICATION_FAILED)));
         out.flush();
         out.close();
-
     }
 }

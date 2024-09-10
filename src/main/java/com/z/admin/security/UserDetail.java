@@ -20,12 +20,9 @@ public class UserDetail extends User {
      */
     private final SystemUser systemUser;
 
-    private final Set<Long> pagePermissionSet;
-
-    public UserDetail(SystemUser systemUser, Collection<? extends GrantedAuthority> authorities, Set<Long> pagePermissionSet) {
+    public UserDetail(SystemUser systemUser, Collection<? extends GrantedAuthority> authorities) {
         // 必须调用父类的构造方法，以初始化用户名、密码、权限
         super(systemUser.getUsername(), systemUser.getPassword(), authorities);
         this.systemUser = systemUser;
-        this.pagePermissionSet = pagePermissionSet;
     }
 }

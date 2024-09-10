@@ -11,12 +11,14 @@ import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.vo.system.UserInfoVo;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
-import com.z.admin.service.ISystemRoleService;
+import com.z.admin.security.UserDetail;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.LoginUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户管理
@@ -30,8 +32,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Resource
     ISystemUserService systemUserService;
-    @Resource
-    ISystemRoleService systemRoleService;
 
     /**
      * 登录
@@ -48,15 +48,16 @@ public class UserController {
      */
     @GetMapping("/info")
     public Result<UserInfoVo> info() {
-        SystemUser user = LoginUtil.getLoginUser().getSystemUser();
+        UserDetail userDetail = LoginUtil.getLoginUser();
+        SystemUser systemUser = userDetail.getSystemUser();
 
 
-        UserInfoVo userInfoVo = user.toVO(UserInfoVo.class);
+        UserInfoVo userInfoVo = systemUser.toVO(UserInfoVo.class);
         //todo 待处理
 //        userInfoVo.getPagePermissionList().add(1);
 //        userInfoVo.getPagePermissionList().add(2);
-        userInfoVo.getPagePermissionList().add(1);
-        userInfoVo.getOperationPermissionList().add(235);
+        List<Long> list = userDetail.getAuthorities().stream().map(e -> Long.parseLong(e.getAuthority())).toList();
+        userInfoVo.setPermissionList(list);
 //        userInfoVo.getRoleList().add("qwert");
         return Result.success(userInfoVo);
     }

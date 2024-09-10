@@ -84,8 +84,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
 
-        //页面权限
-        Set<Long> pagePermissionList = new HashSet<>();
         //操作权限
         List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
 
@@ -94,14 +92,12 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         List<Long> roleIdList = this.userRoleService.queryRoleByUserId(userId);
         permissionIdSet.addAll(this.rolePermissionService.queryPermissionByRoleId(roleIdList));
         permissionIdSet.addAll(this.userPermissionService.queryPermissionByUserId(userId));
-        if (DataUtils.isNotEmpty(permissionIdSet)) {
-            List<SystemPermission> systemPermissionList = this.permissionService.listByIds(permissionIdSet);
-            pagePermissionList = systemPermissionList.stream().filter(e -> e.getType().equals(SystemPermissionType.PAGE.getId())).map(SystemPermission::getId).collect(Collectors.toSet());
-            systemPermissionList.stream().filter(e -> e.getType().equals(SystemPermissionType.OPERATE.getId())).forEach(e -> operatePermissionList.add(new SimpleGrantedAuthority(e.getId().toString())));
+        for (Long permissionId : permissionIdSet) {
+            operatePermissionList.add(new SimpleGrantedAuthority(permissionId.toString()));
         }
 
         // 认证成功，返回自定义的UserDetail对象
-        return new UserDetail(user, operatePermissionList, pagePermissionList);
+        return new UserDetail(user, operatePermissionList);
     }
 
     /**
