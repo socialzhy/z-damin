@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 09/09/2024 17:17:29
+ Date: 09/09/2024 17:35:25
 */
 
 SET NAMES utf8mb4;
@@ -89,7 +89,8 @@ CREATE TABLE `system_role_permission` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_roleId` (`role_id`) USING BTREE COMMENT '角色id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -141,7 +142,8 @@ CREATE TABLE `system_user_permission` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_uerId` (`user_id`) USING BTREE COMMENT '用户id'
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户权限关联';
 
 -- ----------------------------
@@ -165,7 +167,8 @@ CREATE TABLE `system_user_role` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_userId` (`user_id`) USING BTREE COMMENT '用户id'
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户角色关联';
 
 -- ----------------------------

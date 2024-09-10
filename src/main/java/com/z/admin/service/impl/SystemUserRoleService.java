@@ -24,7 +24,7 @@ public class SystemUserRoleService extends ServiceImpl<SystemUserRoleMapper, Sys
     public List<Long> queryRoleByUserId(Long userId) {
         LambdaQueryWrapper<SystemUserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(SystemUserRole::getRoleId)
-                .eq(SystemUserRole::getUserId,userId);
+                .eq(SystemUserRole::getUserId, userId);
         return this.listObjs(wrapper, e -> (Long) e);
     }
 }

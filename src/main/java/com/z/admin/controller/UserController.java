@@ -48,7 +48,7 @@ public class UserController {
      */
     @GetMapping("/info")
     public Result<UserInfoVo> info() {
-        SystemUser user = systemUserService.getById(LoginUtil.getLoginUserId());
+        SystemUser user = LoginUtil.getLoginUser().getSystemUser();
 
 
         UserInfoVo userInfoVo = user.toVO(UserInfoVo.class);

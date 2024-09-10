@@ -1,12 +1,12 @@
 package com.z.admin.dao;
 
-import com.z.admin.entity.po.SystemUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.z.admin.entity.po.SystemUser;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author system

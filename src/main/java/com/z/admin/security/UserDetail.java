@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,13 +20,12 @@ public class UserDetail extends User {
      */
     private final SystemUser systemUser;
 
-    private Set<Integer> operationPermissionSet = new HashSet<>();
+    private final Set<Long> pagePermissionSet;
 
-    private Set<Integer> pagePermissionSet = new HashSet<>();
-
-    public UserDetail(SystemUser systemUser, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetail(SystemUser systemUser, Collection<? extends GrantedAuthority> authorities, Set<Long> pagePermissionSet) {
         // 必须调用父类的构造方法，以初始化用户名、密码、权限
         super(systemUser.getUsername(), systemUser.getPassword(), authorities);
         this.systemUser = systemUser;
+        this.pagePermissionSet = pagePermissionSet;
     }
 }

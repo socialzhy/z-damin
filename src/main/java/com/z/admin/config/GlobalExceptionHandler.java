@@ -1,7 +1,7 @@
 package com.z.admin.config;
 
-import com.z.admin.entity.vo.base.Result;
 import com.z.admin.entity.enums.ResultCodeEnum;
+import com.z.admin.entity.vo.base.Result;
 import com.z.admin.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

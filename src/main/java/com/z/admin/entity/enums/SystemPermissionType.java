@@ -14,7 +14,7 @@ public enum SystemPermissionType {
 
     private final Integer id;
 
-    SystemPermissionType(Integer id){
+    SystemPermissionType(Integer id) {
         this.id = id;
     }
 }

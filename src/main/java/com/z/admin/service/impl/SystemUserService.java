@@ -5,15 +5,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.z.admin.dao.SystemUserMapper;
+import com.z.admin.entity.enums.ResultCodeEnum;
+import com.z.admin.entity.enums.SystemPermissionType;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
+import com.z.admin.entity.po.SystemPermission;
 import com.z.admin.entity.po.SystemUser;
-import com.z.admin.entity.enums.ResultCodeEnum;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
 import com.z.admin.security.UserDetail;
 import com.z.admin.service.*;
+import com.z.admin.util.DataUtils;
 import com.z.admin.util.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +26,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author zhy
@@ -38,9 +45,9 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     @Resource
     private ISystemUserRoleService userRoleService;
     @Resource
-    private ISystemRoleService roleService;
-    @Resource
     private ISystemRolePermissionService rolePermissionService;
+    @Resource
+    private ISystemUserPermissionService userPermissionService;
     @Resource
     private ISystemPermissionService permissionService;
 
@@ -77,21 +84,32 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
         }
 
-        this.queryUserPermission(user.getId());
+        //页面权限
+        Set<Long> pagePermissionList = new HashSet<>();
+        //操作权限
+        List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
+
+        Long userId = user.getId();
+        Set<Long> permissionIdSet = new HashSet<>();
+        List<Long> roleIdList = this.userRoleService.queryRoleByUserId(userId);
+        permissionIdSet.addAll(this.rolePermissionService.queryPermissionByRoleId(roleIdList));
+        permissionIdSet.addAll(this.userPermissionService.queryPermissionByUserId(userId));
+        if (DataUtils.isNotEmpty(permissionIdSet)) {
+            List<SystemPermission> systemPermissionList = this.permissionService.listByIds(permissionIdSet);
+            pagePermissionList = systemPermissionList.stream().filter(e -> e.getType().equals(SystemPermissionType.PAGE.getId())).map(SystemPermission::getId).collect(Collectors.toSet());
+            systemPermissionList.stream().filter(e -> e.getType().equals(SystemPermissionType.OPERATE.getId())).forEach(e -> operatePermissionList.add(new SimpleGrantedAuthority(e.getId().toString())));
+        }
 
         // 认证成功，返回自定义的UserDetail对象
-        return new UserDetail(user, List.of(new SimpleGrantedAuthority("8")));
+        return new UserDetail(user, operatePermissionList, pagePermissionList);
     }
 
-
+    /**
+     * 通过username查询用户
+     */
     private SystemUser getByUsername(String username) {
         LambdaQueryWrapper<SystemUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SystemUser::getUsername, username);
         return this.getOne(wrapper);
-    }
-
-    private List<Long> queryUserPermission(Long userId){
-        List<Long> roleIdList = this.userRoleService.queryRoleByUserId(userId);
-        return null;
     }
 }

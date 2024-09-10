@@ -32,13 +32,14 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * 超级管理员权限
+     */
+    private final String SUPPER_ADMIN_AUTH = "-1";
     @Resource
     private LoginFilter loginFilter;
     @Resource
     private ISystemPermissionService permissionService;
-
-    /** 超级管理员权限 */
-    private final String SUPPER_ADMIN_AUTH = "-1";
 
     // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
     @Bean
