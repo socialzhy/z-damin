@@ -8,6 +8,7 @@
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/po/base/CommonPo.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/LoginUtil.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/service/impl/SystemRoleService.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/po/SystemRolePermission.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/security/UserDetail.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/vo/base/Result.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/service/impl/SystemPermissionService.java
@@ -19,8 +20,8 @@
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/controller/TestController.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/dao/SystemUserPermissionMapper.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/vo/base/BaseVo.java
-/Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/vo/base/ResultCodeEnum.java
-/Users/java/work/my/z-damin/src/main/java/com/z/admin/security/MySecurityMetadataSource.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/enums/SystemPermissionType.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/service/impl/SystemRolePermissionService.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/controller/UserController.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/orika/converter/BooleanConverters.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/po/SystemUserRole.java
@@ -32,6 +33,7 @@
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/orika/converter/BigDecimalConverters.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/param/base/BasePageParam.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/service/ISystemRoleService.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/service/ISystemRolePermissionService.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/vo/system/UserLoginVo.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/BeanUtils.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/excel/ExportData.java
@@ -46,6 +48,7 @@
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/config/SecurityConfig.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/security/MyEntryPoint.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/vo/system/UserVo.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/dao/SystemRolePermissionMapper.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/ZAdminApplication.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/config/MyMetaObjectHandler.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/orika/OrikaMapper.java
@@ -56,6 +59,7 @@
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/util/excel/EasyExcelUtil.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/dao/SystemUserMapper.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/dao/SystemRoleMapper.java
+/Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/enums/ResultCodeEnum.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/service/ISystemUserPermissionService.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/po/SystemUser.java
 /Users/java/work/my/z-damin/src/main/java/com/z/admin/entity/po/SystemRole.java

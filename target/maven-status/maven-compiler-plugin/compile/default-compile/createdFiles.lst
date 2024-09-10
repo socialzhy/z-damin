@@ -74,6 +74,5 @@ com/z/admin/entity/vo/base/Result.class
 com/z/admin/ZAdminApplication.class
 com/z/admin/util/excel/EasyExcelUtil.class
 com/z/admin/util/orika/MapperUtil.class
-com/z/admin/entity/vo/base/ResultCodeEnum.class
 com/z/admin/entity/param/base/BasePageParam.class
 com/z/admin/security/UserDetail.class

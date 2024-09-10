@@ -80,7 +80,7 @@ public class UserController {
      * @param id 用户id
      */
     @PostMapping("/delete/{id}")
-    public Result<?> delete(@PathVariable Long id) {
+    public Result<?> delete(@PathVariable("id") Long id) {
         systemUserService.removeById(id);
         return Result.success();
     }
@@ -102,7 +102,7 @@ public class UserController {
      * @param id 用户id
      */
     @GetMapping("/{id}")
-    public Result<UserInfoVo> detail(@PathVariable Long id) {
+    public Result<UserInfoVo> detail(@PathVariable("id") Long id) {
         SystemUser user = systemUserService.getById(id);
         return Result.success(user.toVO(UserInfoVo.class));
     }

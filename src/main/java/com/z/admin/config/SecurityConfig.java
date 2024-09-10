@@ -7,6 +7,7 @@ import com.z.admin.service.ISystemPermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -65,7 +66,7 @@ public class SecurityConfig {
                             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
 
                     // 只要登录就可以访问的接口
-                    authorize.requestMatchers("/system/user/info").authenticated();
+                    authorize.requestMatchers(HttpMethod.GET,"/system/user/info").authenticated();
 
                     // 允许超级管理员访问所有路径
                     authorize.requestMatchers("/**").hasAuthority(SUPPER_ADMIN_AUTH);
@@ -73,7 +74,7 @@ public class SecurityConfig {
                     // 动态加载自定义权限配置
                     List<SystemPermission> permissionList = permissionService.queryOperationalPermission();
                     for (SystemPermission permission : permissionList) {
-                        authorize.requestMatchers(permission.getPath())
+                        authorize.requestMatchers(HttpMethod.valueOf(permission.getMethod()),permission.getPath())
                                 .hasAuthority(permission.getId().toString());
                     }
 
@@ -91,9 +92,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));  // 允许所有来源
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 允许的 HTTP 方法
+        configuration.setAllowedMethods(List.of(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name())); // 允许的 HTTP 方法
         configuration.setAllowedHeaders(List.of("*")); // 允许的请求头
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 对所有路径生效
         return source;
