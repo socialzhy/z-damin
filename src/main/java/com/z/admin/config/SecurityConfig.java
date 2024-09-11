@@ -60,23 +60,23 @@ public class SecurityConfig {
 
         // 配置认证规则
         http.authorizeHttpRequests(authorize -> {
-                    // 放行登录和注册接口（以及其他不需要认证的接口）
+                    // 允许放行登录和注册接口（以及其他不需要认证的接口）
                     authorize.requestMatchers("/system/user/login", "/test/register").permitAll()
                             // 允许预检请求
                             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
 
-                    // 只要登录就可以访问的接口
-                    authorize.requestMatchers(HttpMethod.GET,"/system/user/info").authenticated();
-
-                    // 允许超级管理员访问所有路径
-                    authorize.requestMatchers("/**").hasAuthority(SUPPER_ADMIN_AUTH);
-
                     // 动态加载自定义权限配置
                     List<SystemPermission> permissionList = permissionService.queryOperationalPermission();
                     for (SystemPermission permission : permissionList) {
-                        authorize.requestMatchers(HttpMethod.valueOf(permission.getMethod()),permission.getPath())
+                        authorize.requestMatchers(HttpMethod.valueOf(permission.getMethod()), permission.getPath())
                                 .hasAuthority(permission.getId().toString());
                     }
+
+                    // 只要登录就可以访问的接口
+                    authorize.requestMatchers(HttpMethod.GET, "/system/user/info").authenticated();
+
+                    // 允许超级管理员访问所有路径
+                    authorize.requestMatchers("/**").hasAuthority(SUPPER_ADMIN_AUTH);
 
                     // 其他请求都需要认证
                     authorize.anyRequest().authenticated();
@@ -86,6 +86,9 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
+
 
     // 自定义 CORS 配置
     @Bean
