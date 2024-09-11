@@ -77,11 +77,16 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // todo 待处理  改为缓存-> 数据库查询
         // 从数据库中查询出用户实体对象
         SystemUser user = this.getByUsername(username);
         // 没查询到需要抛出该异常，这样才能被Spring Security的错误处理器处理
         if (user == null) {
-            throw new ServiceException(ResultCodeEnum.USER_NOT_EXIST);
+            throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
+        }
+
+        if (user.getIsDisabled()){
+            throw new ServiceException(ResultCodeEnum.USER_DISABLED);
         }
 
         //操作权限

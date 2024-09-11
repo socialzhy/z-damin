@@ -19,12 +19,12 @@ public class CommonPo extends BasePo {
      * 是否禁用
      */
     @TableField(fill = FieldFill.INSERT)
-    private Integer isDisabled;
+    private Boolean isDisabled;
 
     /**
      * 是否删除
      */
     @TableLogic //逻辑删除注解
     @TableField(fill = FieldFill.INSERT)
-    private Integer isDeleted;
+    private Boolean isDeleted;
 }

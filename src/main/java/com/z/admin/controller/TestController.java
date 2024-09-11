@@ -55,8 +55,7 @@ public class TestController {
 
     @GetMapping("/test")
     public void test() {
-        Thread thread = Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!"));
-        thread.start();
+        Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!")).start();
         System.out.println("success!!!");
     }
 }

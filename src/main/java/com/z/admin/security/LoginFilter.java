@@ -1,4 +1,4 @@
-package com.z.admin.filter;
+package com.z.admin.security;
 
 import com.z.admin.service.impl.SystemUserService;
 import com.z.admin.util.JwtUtil;

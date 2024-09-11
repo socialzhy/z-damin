@@ -20,4 +20,9 @@ public interface ISystemPermissionService extends IService<SystemPermission> {
      */
     List<SystemPermission> queryOperationalPermission();
 
+    /**
+     * 查询匿名访问权限
+     */
+    List<String> queryAnonymousPermission();
+
 }

@@ -27,4 +27,12 @@ public class SystemPermissionService extends ServiceImpl<SystemPermissionMapper,
         wrapper.eq(SystemPermission::getType, SystemPermissionType.OPERATE.getId());
         return this.list(wrapper);
     }
+
+    @Override
+    public List<String> queryAnonymousPermission() {
+        LambdaQueryWrapper<SystemPermission> wrapper = new LambdaQueryWrapper<>();
+        wrapper.select(SystemPermission::getId)
+                .eq(SystemPermission::getAllowAnonymous, true);
+        return this.listObjs(wrapper, Object::toString);
+    }
 }
