@@ -1,5 +1,6 @@
 package com.z.admin.security;
 
+import com.z.admin.entity.enums.SystemPermissionLevel;
 import com.z.admin.entity.po.SystemPermission;
 import com.z.admin.service.ISystemPermissionService;
 import com.z.admin.util.DataUtils;
@@ -7,6 +8,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -20,7 +22,7 @@ import java.util.function.Supplier;
 
 /**
  * @author zhy
- * @description
+ * @description 自定义鉴权manager
  */
 @Configuration
 public class MyAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
@@ -43,30 +45,39 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
             return new AuthorizationDecision(true);
         }
 
+        // 校验权限
         boolean granted = this.checkPermissions(authentication.get(),object.getRequest());
 
         return new AuthorizationDecision(granted);
     }
 
     /**
-     * 校验是否用权限
+     * 校验是否有权限 todo 待处理  使用缓存
      */
     private boolean checkPermissions(Authentication authentication, HttpServletRequest request) {
+        // 获取所有的操作权限
         List<SystemPermission> systemPermissionList = this.permissionService.queryOperationalPermission();
 
-        SystemPermission permission = systemPermissionList.stream().filter(systemPermission -> this.checkRequest(request,systemPermission)).findFirst().orElse(null);
+        // 校验访问资源是否存在
+        SystemPermission permission = systemPermissionList.stream().filter(systemPermission -> this.checkRequest(request,HttpMethod.valueOf(systemPermission.getMethod()),systemPermission.getPath())).findFirst().orElse(null);
         if (DataUtils.isEmpty(permission)){
             return false;
         }
 
+        // 校验登录权限
+        if (permission.getAccessLevel().equals(SystemPermissionLevel.LOGIN.getId()) && !(authentication instanceof AnonymousAuthenticationToken)){
+            return true;
+        }
+
+        // 鉴权
         return authentication.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals(permission.getId().toString()));
     }
 
     /**
      * 校验request是否匹配 todo 待处理  使用缓存
      */
-    public boolean checkRequest(HttpServletRequest request,SystemPermission permission) {
-        CombinedRequestMatcher matcher = new CombinedRequestMatcher(HttpMethod.valueOf(permission.getMethod()), permission.getPath());
+    public boolean checkRequest(HttpServletRequest request,HttpMethod method, String path) {
+        CombinedRequestMatcher matcher = new CombinedRequestMatcher(method, path);
         return matcher.matches(request);
     }
 }

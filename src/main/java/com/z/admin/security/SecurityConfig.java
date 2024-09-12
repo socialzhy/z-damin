@@ -4,6 +4,7 @@ import com.z.admin.service.ISystemPermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -93,9 +94,6 @@ public class SecurityConfig {
     }
 
 
-
-
-
     // 自定义 CORS 配置
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -106,12 +104,6 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 对所有路径生效
         return source;
-    }
-
-    // 密码加密器配置
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     // 使用security的AuthenticationManager

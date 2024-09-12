@@ -48,9 +48,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     private ISystemRolePermissionService rolePermissionService;
     @Resource
     private ISystemUserPermissionService userPermissionService;
-    @Resource
-    private ISystemPermissionService permissionService;
-
 
     @Override
     public IPage<UserVo> query(UserQueryParam param) {
