@@ -6,17 +6,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.z.admin.dao.SystemUserMapper;
 import com.z.admin.entity.enums.ResultCodeEnum;
-import com.z.admin.entity.enums.SystemPermissionType;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
-import com.z.admin.entity.po.SystemPermission;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
 import com.z.admin.security.UserDetail;
-import com.z.admin.service.*;
-import com.z.admin.util.DataUtils;
+import com.z.admin.service.ISystemRolePermissionService;
+import com.z.admin.service.ISystemUserPermissionService;
+import com.z.admin.service.ISystemUserRoleService;
+import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author zhy
@@ -82,7 +81,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
         }
 
-        if (user.getIsDisabled()){
+        if (user.getIsDisabled()) {
             throw new ServiceException(ResultCodeEnum.USER_DISABLED);
         }
 

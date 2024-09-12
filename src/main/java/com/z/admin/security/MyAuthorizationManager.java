@@ -14,7 +14,6 @@ import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,12 +40,12 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
 
         // 超级管理员直接放行
         boolean superAdmin = authorities.stream().anyMatch(authority -> authority.getAuthority().equals(SUPPER_ADMIN_AUTH));
-        if (superAdmin){
+        if (superAdmin) {
             return new AuthorizationDecision(true);
         }
 
         // 校验权限
-        boolean granted = this.checkPermissions(authentication.get(),object.getRequest());
+        boolean granted = this.checkPermissions(authentication.get(), object.getRequest());
 
         return new AuthorizationDecision(granted);
     }
@@ -59,13 +58,13 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
         List<SystemPermission> systemPermissionList = this.permissionService.queryOperationalPermission();
 
         // 校验访问资源是否存在
-        SystemPermission permission = systemPermissionList.stream().filter(systemPermission -> this.checkRequest(request,HttpMethod.valueOf(systemPermission.getMethod()),systemPermission.getPath())).findFirst().orElse(null);
-        if (DataUtils.isEmpty(permission)){
+        SystemPermission permission = systemPermissionList.stream().filter(systemPermission -> this.checkRequest(request, HttpMethod.valueOf(systemPermission.getMethod()), systemPermission.getPath())).findFirst().orElse(null);
+        if (DataUtils.isEmpty(permission)) {
             return false;
         }
 
         // 校验登录权限
-        if (permission.getAccessLevel().equals(SystemPermissionLevel.LOGIN.getId()) && !(authentication instanceof AnonymousAuthenticationToken)){
+        if (permission.getAccessLevel().equals(SystemPermissionLevel.LOGIN.getId()) && !(authentication instanceof AnonymousAuthenticationToken)) {
             return true;
         }
 
@@ -76,7 +75,7 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
     /**
      * 校验request是否匹配 todo 待处理  使用缓存
      */
-    public boolean checkRequest(HttpServletRequest request,HttpMethod method, String path) {
+    public boolean checkRequest(HttpServletRequest request, HttpMethod method, String path) {
         CombinedRequestMatcher matcher = new CombinedRequestMatcher(method, path);
         return matcher.matches(request);
     }

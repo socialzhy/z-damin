@@ -9,11 +9,17 @@ import lombok.Getter;
 @Getter
 public enum SystemPermissionLevel {
 
-    /** 匿名访问 */
+    /**
+     * 匿名访问
+     */
     ANONYMOUS(1),
-    /** 登录访问 */
+    /**
+     * 登录访问
+     */
     LOGIN(2),
-    /** 鉴权访问 */
+    /**
+     * 鉴权访问
+     */
     AUTH(3);
 
     private final Integer id;
