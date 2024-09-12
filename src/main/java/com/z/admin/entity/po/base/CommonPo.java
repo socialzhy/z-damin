@@ -15,15 +15,9 @@ import lombok.EqualsAndHashCode;
 public class CommonPo extends BasePo {
 
     /**
-     * 是否禁用
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Boolean isDisabled;
-
-    /**
      * 是否删除
      */
     @TableLogic //逻辑删除注解
     @TableField(fill = FieldFill.INSERT)
-    private Boolean isDeleted;
+    private Boolean deleted;
 }

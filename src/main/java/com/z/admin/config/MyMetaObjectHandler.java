@@ -18,15 +18,13 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     private static final String FIELD_CREATE_TIME = "createTime";
     private static final String FIELD_UPDATE_BY = "updateBy";
     private static final String FIELD_UPDATE_TIME = "updateTime";
-    private static final String FIELD_IS_DISABLED = "isDisabled";
-    private static final String FIELD_IS_DELETED = "isDeleted";
+    private static final String FIELD_DELETED = "deleted";
 
     @Override
     public void insertFill(MetaObject metaObject) {
         Object createBy = this.getFieldValByName(FIELD_CREATE_BY, metaObject);
         Object createTime = this.getFieldValByName(FIELD_CREATE_TIME, metaObject);
-        Object isDisabled = this.getFieldValByName(FIELD_IS_DISABLED, metaObject);
-        Object isDeleted = this.getFieldValByName(FIELD_IS_DELETED, metaObject);
+        Object deleted = this.getFieldValByName(FIELD_DELETED, metaObject);
         //根据名称设置属性值
         if (Objects.isNull(createBy)) {
             this.setFieldValByName(FIELD_CREATE_BY, 0L, metaObject);
@@ -34,11 +32,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         if (Objects.isNull(createTime)) {
             this.setFieldValByName(FIELD_CREATE_TIME, LocalDateTime.now(), metaObject);
         }
-        if (Objects.isNull(isDisabled)) {
-            this.setFieldValByName(FIELD_IS_DISABLED, 0, metaObject);
-        }
-        if (Objects.isNull(isDeleted)) {
-            this.setFieldValByName(FIELD_IS_DELETED, 0, metaObject);
+        if (Objects.isNull(deleted)) {
+            this.setFieldValByName(FIELD_DELETED, 0, metaObject);
         }
 
         this.updateFill(metaObject);

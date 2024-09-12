@@ -80,7 +80,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
         }
 
-        if (user.getIsDisabled()) {
+        if (user.getDisabled()) {
             throw new ServiceException(ResultCodeEnum.USER_DISABLED);
         }
 

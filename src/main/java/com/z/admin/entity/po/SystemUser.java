@@ -7,7 +7,7 @@ import lombok.Setter;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author system
@@ -42,4 +42,9 @@ public class SystemUser extends CommonPo {
      * 姓名
      */
     private String name;
+
+    /**
+     * 是否禁用
+     */
+    private Boolean disabled;
 }
