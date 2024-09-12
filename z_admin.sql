@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 09/09/2024 17:35:25
+ Date: 12/09/2024 11:21:57
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `system_permission` (
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '操作路由',
   `type` int NOT NULL DEFAULT '1' COMMENT '0超管权限 1页面权限 2操作权限',
   `parent_id` bigint NOT NULL DEFAULT '0' COMMENT '权限父节点id',
-  `allow_anonymous` tinyint NOT NULL DEFAULT '0' COMMENT '允许匿名访问 0 不允许 1允许',
+  `access_level` int NOT NULL DEFAULT '0' COMMENT '权限等级 1允许匿名访问  2登录即可访问  3须有此权限可访问',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '权限名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '描述',
   `create_by` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
@@ -44,11 +44,13 @@ CREATE TABLE `system_permission` (
 -- Records of system_permission
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `allow_anonymous`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (-1, '', '*', -1, -1, 0, '超管权限', '超管权限', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
-INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `allow_anonymous`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1, '', '/system', 1, 0, 0, '系统设置', '系统设置', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
-INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `allow_anonymous`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (2, '', '/system/user', 1, 1, 0, '用户管理', '用户管理', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
-INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `allow_anonymous`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (3, 'POST', '/system/user/add', 2, 11, 0, '新增用户', '新增用户', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
-INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `allow_anonymous`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (8, 'GET', '/test/test', 2, 11, 0, '接口测试', '接口测试', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (-1, '', '*', -1, -1, 3, '超管权限', '超管权限', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1, '', '/system', 1, 0, 3, '系统设置', '系统设置', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (101, '', '/system/user', 1, 1, 3, '用户管理', '用户管理', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1001, 'POST', '/system/user/add', 2, 11, 3, '新增用户', '新增用户', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1002, 'GET', '/system/user/{id}', 2, 11, 3, '用户详情', '用户详情', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (9999, 'GET', '/test/test', 2, 11, 2, '接口测试', '接口测试', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
+INSERT INTO `system_permission` (`id`, `method`, `path`, `type`, `parent_id`, `access_level`, `name`, `description`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (10001, 'POST', '/system/user/login', 2, 11, 1, '登录', '登录', 0, '2023-01-06 17:19:30', 0, '2023-01-06 17:19:30', 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -91,12 +93,13 @@ CREATE TABLE `system_role_permission` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_roleId` (`role_id`) USING BTREE COMMENT '角色id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of system_role_permission
 -- ----------------------------
 BEGIN;
+INSERT INTO `system_role_permission` (`id`, `role_id`, `permission_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1, 1, -1, 0, '2024-09-10 15:02:18', 0, '2024-09-10 15:02:18', 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -144,13 +147,14 @@ CREATE TABLE `system_user_permission` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`),
   KEY `idx_uerId` (`user_id`) USING BTREE COMMENT '用户id'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户权限关联';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户权限关联';
 
 -- ----------------------------
 -- Records of system_user_permission
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_user_permission` (`id`, `user_id`, `permission_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1, 23, 1, 0, '2023-11-30 10:33:15', 0, '2023-11-30 10:33:15', 0, 0);
+INSERT INTO `system_user_permission` (`id`, `user_id`, `permission_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (1, 2, 1002, 0, '2023-11-30 10:33:15', 0, '2023-11-30 10:33:15', 0, 0);
+INSERT INTO `system_user_permission` (`id`, `user_id`, `permission_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_disabled`, `is_deleted`) VALUES (2, 2, 9999, 0, '2023-11-30 10:33:15', 0, '2023-11-30 10:33:15', 0, 0);
 COMMIT;
 
 -- ----------------------------
