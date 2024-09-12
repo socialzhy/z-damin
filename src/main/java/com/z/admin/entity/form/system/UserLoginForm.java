@@ -7,7 +7,6 @@ import lombok.Data;
 /**
  * @author zhy
  * @description 登录form
- * @date 2022/9/21
  */
 @Data
 public class UserLoginForm {

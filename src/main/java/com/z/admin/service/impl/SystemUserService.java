@@ -34,7 +34,6 @@ import java.util.Set;
 /**
  * @author zhy
  * @description 系统用户
- * @date 2022/10/17
  */
 @Service
 public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService, UserDetailsService {

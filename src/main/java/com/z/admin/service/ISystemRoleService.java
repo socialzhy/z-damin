@@ -6,7 +6,6 @@ import com.z.admin.entity.po.SystemRole;
 /**
  * @author zhy
  * @description
- * @date 2023/11/30
  */
 public interface ISystemRoleService extends IService<SystemRole> {
 }

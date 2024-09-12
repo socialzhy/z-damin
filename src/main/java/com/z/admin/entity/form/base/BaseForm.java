@@ -9,7 +9,6 @@ import java.lang.reflect.ParameterizedType;
 /**
  * @author zhy
  * @description 基础form
- * @date 2022/10/19
  */
 @Data
 public abstract class BaseForm<T extends BasePo> {

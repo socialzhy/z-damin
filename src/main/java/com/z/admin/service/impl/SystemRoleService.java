@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 /**
  * @author zhy
  * @description 系统角色
- * @date 2022/10/17
  */
 @Service
 public class SystemRoleService extends ServiceImpl<SystemRoleMapper, SystemRole> implements ISystemRoleService {

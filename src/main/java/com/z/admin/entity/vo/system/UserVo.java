@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 /**
  * @author zhy
  * @description 用户列表vo
- * @date 2022/10/19
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

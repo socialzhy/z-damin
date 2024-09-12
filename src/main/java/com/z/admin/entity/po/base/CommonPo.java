@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 /**
  * @author zhy
  * @description 常规po
- * @date 2022/10/17
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

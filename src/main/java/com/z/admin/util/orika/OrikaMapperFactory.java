@@ -4,7 +4,6 @@ import ma.glasnost.orika.MapperFactory;
 
 /**
  * @author zhy
- * @date 2022-10-21
  * @description OrikaMapperFactory 单例工厂
  */
 public final class OrikaMapperFactory {

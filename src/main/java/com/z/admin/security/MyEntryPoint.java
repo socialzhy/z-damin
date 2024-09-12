@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 /**
  * @author zhy
  * @description 认证失败处理器
- * @date 2022/12/21
  */
 public class MyEntryPoint implements AuthenticationEntryPoint {
     @Override

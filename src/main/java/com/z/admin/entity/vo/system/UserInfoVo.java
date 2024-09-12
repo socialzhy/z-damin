@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author zhy
  * @description 用户信息
- * @date 2022/10/19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

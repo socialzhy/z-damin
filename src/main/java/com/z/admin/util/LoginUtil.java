@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * @author zhy
  * @description 登录工具类
- * @date 2022/12/22
  */
 public class LoginUtil {
 

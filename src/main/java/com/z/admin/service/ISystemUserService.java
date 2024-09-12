@@ -11,7 +11,6 @@ import com.z.admin.entity.vo.system.UserVo;
 /**
  * @author zhy
  * @description
- * @date 2022/10/17
  */
 public interface ISystemUserService extends IService<SystemUser> {
 

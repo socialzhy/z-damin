@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 
 /**
  * @author zhy
- * @date 2022-10-14
  * @description 对象转换工具类
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {

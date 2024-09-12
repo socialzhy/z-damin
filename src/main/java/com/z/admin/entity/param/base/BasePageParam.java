@@ -7,7 +7,6 @@ import lombok.Data;
 /**
  * @author zhy
  * @description
- * @date 2022/10/20
  */
 @Data
 public class BasePageParam<T extends BasePo> {

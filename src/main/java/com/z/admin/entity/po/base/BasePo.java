@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 /**
  * @author zhy
  * @description 基础po
- * @date 2022/10/17
  */
 @Data
 public class BasePo implements Serializable {
