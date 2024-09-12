@@ -7,7 +7,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 权限表
+ * 权限
  * </p>
  *
  * @author system

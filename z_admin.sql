@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 12/09/2024 14:22:05
+ Date: 12/09/2024 14:24:54
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `system_permission` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uni_method_path` (`method`,`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=100004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=100004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限';
 
 -- ----------------------------
 -- Records of system_permission
@@ -90,7 +90,7 @@ CREATE TABLE `system_role_permission` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_roleId` (`role_id`) USING BTREE COMMENT '角色id'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色权限关联';
 
 -- ----------------------------
 -- Records of system_role_permission
@@ -117,7 +117,7 @@ CREATE TABLE `system_user` (
   `disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',
   `deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='用户';
 
 -- ----------------------------
 -- Records of system_user
