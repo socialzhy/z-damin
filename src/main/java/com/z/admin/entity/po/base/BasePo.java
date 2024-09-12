@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.z.admin.entity.vo.base.BaseVo;
 import com.z.admin.util.BeanUtils;
 import lombok.Data;
+import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 @Data
 public class BasePo implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

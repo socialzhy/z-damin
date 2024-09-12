@@ -1,9 +1,11 @@
 package com.z.admin.controller;
 
 import com.z.admin.entity.form.system.UserLoginForm;
+import com.z.admin.entity.po.SystemRole;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.service.ISystemUserService;
+import com.z.admin.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -22,6 +24,8 @@ public class TestController {
     private PasswordEncoder passwordEncoder;
     @Resource
     private ISystemUserService userService;
+    @Resource
+    private RedisUtil redisUtil;
 
     @PostMapping("/xx")
     public void test(@RequestParam("name") String name, HttpSession session) {
@@ -56,5 +60,14 @@ public class TestController {
     public void test() {
         Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!")).start();
         System.out.println("success!!!");
+
+
+        SystemRole role = new SystemRole();
+        role.setId(1L);
+        role.setName("rple");
+        redisUtil.set("2",role);
+
+
+        System.out.println(redisUtil.get("2"));
     }
 }
