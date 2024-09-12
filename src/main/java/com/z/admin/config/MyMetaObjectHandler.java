@@ -10,7 +10,6 @@ import java.util.Objects;
 /**
  * @author zhy
  * @description mybatis-plus自动填充handler
- * @date 2022/1/21
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {

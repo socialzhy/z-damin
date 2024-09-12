@@ -5,7 +5,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-
+/**
+ * @author zhy
+ * @description 请求匹配
+ */
 public class CombinedRequestMatcher implements RequestMatcher {
 
     private final AntPathRequestMatcher pathMatcher;

@@ -25,7 +25,6 @@ import java.util.List;
  *
  * @author zhy
  * @description 用户管理
- * @date 2022/10/17
  */
 @RestController
 @RequestMapping("/system/user")

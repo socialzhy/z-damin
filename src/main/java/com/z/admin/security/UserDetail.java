@@ -10,7 +10,6 @@ import java.util.Collection;
 /**
  * @author zhy
  * @description 登录用户封装
- * @date 2022/12/21
  */
 @Getter
 public class UserDetail extends User {
