@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.z.admin.entity.po.base.CommonPo;
+import com.z.admin.entity.po.base.BasePo;
 import jakarta.annotation.Resource;
 import org.apache.ibatis.annotations.Mapper;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ public class CodeGenerationTest {
                         //po配置
                         builder.entityBuilder()
                                 //设置po父类
-                                .superClass(CommonPo.class)
+                                .superClass(BasePo.class)
                                 //设置父类字段（数据库中的字段），为了在子类中忽略这些字段的生成
                                 .addSuperEntityColumns("id", "create_by", "create_time", "update_by", "update_time", "create_time", "is_disabled", "is_deleted")
                                 //不生成序列化id

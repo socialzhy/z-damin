@@ -1,13 +1,9 @@
 package com.z.admin.entity.po.base;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import com.z.admin.entity.vo.base.BaseVo;
 import com.z.admin.util.BeanUtils;
 import lombok.Data;
-import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -52,6 +48,13 @@ public class BasePo implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    /**
+     * 是否删除
+     */
+    @TableLogic //逻辑删除注解
+    @TableField(fill = FieldFill.INSERT)
+    private Boolean deleted;
 
 
     public <T extends BaseVo> T toVO(Class<T> clazz) {
