@@ -65,9 +65,9 @@ public class TestController {
         SystemRole role = new SystemRole();
         role.setId(1L);
         role.setName("rple");
-        redisUtil.set("2", role);
+        redisUtil.set("user:xx:2", role);
 
-        SystemRole role1 = redisUtil.getObjectFromRedis("2", SystemRole.class);
-        System.out.println(role1);
+        SystemRole role1 = redisUtil.getObjectFromRedis("user:xx:2", SystemRole.class);
+        System.out.println(role1.getName());
     }
 }

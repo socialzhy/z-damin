@@ -19,6 +19,7 @@ public enum ResultCodeEnum {
     USERNAME_OR_PASSWORD_ERROR(40100, "用户名或密码错误"),
     AUTHENTICATION_FAILED(40101, "认证失败"),
     USER_DISABLED(40102, "用户已禁用"),
+
     //endregion
 
 

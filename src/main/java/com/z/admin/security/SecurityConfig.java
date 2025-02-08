@@ -38,7 +38,7 @@ public class SecurityConfig {
 
     // 配置 SecurityFilterChain 代替 configure(HttpSecurity http)
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         // 关闭csrf和frameOptions
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));

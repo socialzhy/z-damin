@@ -28,7 +28,7 @@ public class UserInfoVo extends BaseVo {
     /**
      * 角色集合
      */
-    private List<String> roleList = new ArrayList<>();
+    private List<Long> roleList = new ArrayList<>();
 
     /**
      * 权限集合

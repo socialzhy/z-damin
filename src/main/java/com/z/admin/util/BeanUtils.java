@@ -23,6 +23,14 @@ import java.util.function.Supplier;
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
 
+    public static <T> T copyProperties(Object source, Class<T> clazz) {
+        // 创建目标对象实例
+        T target = BeanUtils.instantiateClass(clazz);
+        // 将 source 的属性复制到 target
+        BeanUtils.copyProperties(source, target);
+        return target; // 返回目标对象
+    }
+
     /**
      * 将source中不为空的字段，拷贝(覆盖)到target中
      */
