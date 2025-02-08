@@ -21,6 +21,7 @@ public class UserLoginDto extends UserInfoVo {
         UserLoginDto dto = systemUser.toVO(UserLoginDto.class);
         dto.setRoleList(roleList);
         dto.setPermissionList(permissionList);
+        dto.setPassword(systemUser.getPassword());
         return dto;
     }
 }
