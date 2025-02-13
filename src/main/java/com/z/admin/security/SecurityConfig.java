@@ -30,7 +30,7 @@ import java.util.List;
 public class SecurityConfig {
 
     @Resource
-    private LoginFilter loginFilter;
+    private AuthFilter authFilter;
     @Resource
     private ISystemPermissionService permissionService;
     @Resource
@@ -50,7 +50,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // 将自定义的认证过滤器插入到默认的认证过滤器之前
-        http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 匿名用户认证过滤器
         http.addFilterBefore(new MyAnonymousAuthenticationFilter(this.permissionService), AnonymousAuthenticationFilter.class);

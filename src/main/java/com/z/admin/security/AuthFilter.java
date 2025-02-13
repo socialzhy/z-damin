@@ -26,7 +26,7 @@ import java.io.IOException;
  * @description 登录过滤器
  */
 @Component
-public class LoginFilter extends OncePerRequestFilter {
+public class AuthFilter extends OncePerRequestFilter {
     @Resource
     private SystemUserService systemUserService;
 
