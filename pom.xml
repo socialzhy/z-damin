@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>3.3.3</version>
+        <version>3.4.2</version>
     </parent>
 
     <properties>
@@ -23,10 +23,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <loombok-version>1.18.34</loombok-version>
-        <freemarker-version>2.3.32</freemarker-version>
+        <freemarker-version>2.3.34</freemarker-version>
         <mysql-connector-version>8.0.33</mysql-connector-version>
         <orika-core-version>1.5.4</orika-core-version>
-        <easyexcel-version>4.0.2</easyexcel-version>
+        <easyexcel-version>4.0.3</easyexcel-version>
         <jwt-version>0.12.6</jwt-version>
         <fastjson2-version>2.0.52</fastjson2-version>
     </properties>

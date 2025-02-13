@@ -7,6 +7,7 @@ import com.z.admin.entity.param.system.UserQueryParam;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author zhy
@@ -17,4 +18,6 @@ public interface ISystemUserService extends IService<SystemUser> {
     IPage<UserVo> query(UserQueryParam param);
 
     UserLoginVo login(UserLoginForm form);
+
+    UserDetails loadUserByCache(String username);
 }

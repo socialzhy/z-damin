@@ -110,10 +110,9 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 内存查询
-        UserLoginDto userLoginDto = redisUtil.getObjectFromRedis(RedisKeyEnum.USER_INFO, username, UserLoginDto.class);
-        if (DataUtils.isNotEmpty(userLoginDto)) {
-            List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(userLoginDto.getRoleList(), userLoginDto.getPermissionList());
-            return new UserDetail(userLoginDto, operatePermissionList);
+        UserDetail userDetail = this.loadUserByCache(username);
+        if (DataUtils.isNotEmpty(userDetail)){
+            return userDetail;
         }
 
         // 从数据库中查询出用户实体对象
@@ -139,6 +138,18 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 
         // 认证成功，返回自定义的UserDetail对象
         return userDetails;
+    }
+
+    @Override
+    public UserDetail loadUserByCache(String username){
+        // 缓存查询
+        UserLoginDto userLoginDto = redisUtil.getObjectFromRedis(RedisKeyEnum.USER_INFO, username, UserLoginDto.class);
+        if (DataUtils.isEmpty(userLoginDto)) {
+            return null;
+        }
+
+        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(userLoginDto.getRoleList(), userLoginDto.getPermissionList());
+        return new UserDetail(userLoginDto, operatePermissionList);
     }
 
     /**

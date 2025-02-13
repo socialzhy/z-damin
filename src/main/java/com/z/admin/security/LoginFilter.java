@@ -1,6 +1,9 @@
 package com.z.admin.security;
 
+import com.z.admin.entity.enums.ResultCodeEnum;
+import com.z.admin.exception.ServiceException;
 import com.z.admin.service.impl.SystemUserService;
+import com.z.admin.util.DataUtils;
 import com.z.admin.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Nonnull;
@@ -34,8 +37,11 @@ public class LoginFilter extends OncePerRequestFilter {
         if (claims != null) {
             // 从`JWT`中提取出之前存储好的用户名
             String username = claims.getSubject();
-            // 查询出用户对象
-            UserDetails user = systemUserService.loadUserByUsername(username);
+            // 从缓存中查询出用户对象,如果不在缓存里则认证失败,需要重新登录
+            UserDetails user = systemUserService.loadUserByCache(username);
+            if (DataUtils.isEmpty(user)){
+                throw new ServiceException(ResultCodeEnum.AUTHENTICATION_FAILED);
+            }
             // 手动组装一个认证对象
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
             // 将认证对象放到上下文中
