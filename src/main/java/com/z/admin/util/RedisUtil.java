@@ -93,10 +93,10 @@ public class RedisUtil {
     /**
      * 从 Redis 获取数据并转换为目标对象
      *
-     * @param redisKeyEnum key的枚举
-     * @param key          Redis 中存储的 key
-     * @param clazz        目标类的类型
-     * @param <T>          泛型类型
+     * @param redisKeyEnum  key的枚举
+     * @param key   Redis 中存储的 key
+     * @param clazz 目标类的类型
+     * @param <T>   泛型类型
      * @return 返回反序列化后的对象
      */
     public <T> T getObjectFromRedis(RedisKeyEnum redisKeyEnum, String key, Class<T> clazz) {
@@ -147,11 +147,11 @@ public class RedisUtil {
      * 普通缓存放入
      *
      * @param redisKeyEnum key枚举
-     * @param key          键
-     * @param value        值
+     * @param key   键
+     * @param value 值
      * @return true成功 false失败
      */
-    public Boolean set(RedisKeyEnum redisKeyEnum, String key, Object value) {
+    public Boolean set(RedisKeyEnum redisKeyEnum,String key, Object value) {
         try {
             redisTemplate.opsForValue().set(redisKeyEnum.getKey() + key, value);
             return true;

@@ -13,7 +13,7 @@ public enum RedisKeyEnum {
     @Getter
     private final String key;
 
-    RedisKeyEnum(String key) {
+    RedisKeyEnum(String key){
         this.key = key;
     }
 

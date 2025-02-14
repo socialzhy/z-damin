@@ -24,6 +24,7 @@ import com.z.admin.util.JwtUtil;
 import com.z.admin.util.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,8 @@ import java.util.Set;
  * @description 系统用户
  */
 @Service
-public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService {
+public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService{
 
-    @Resource
-    AuthenticationManager authenticationManager;
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
@@ -52,6 +51,8 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     private ISystemUserPermissionService userPermissionService;
     @Resource
     private RedisUtil redisUtil;
+    @Resource
+    AuthenticationManager authenticationManager;
 
     @Override
     public IPage<UserVo> query(UserQueryParam param) {
@@ -134,7 +135,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 //    }
 
     @Override
-    public UserDetail loadUserByCache(String username) {
+    public UserDetail loadUserByCache(String username){
         // 缓存查询
         UserLoginDto userLoginDto = redisUtil.getObjectFromRedis(RedisKeyEnum.USER_INFO, username, UserLoginDto.class);
         if (DataUtils.isEmpty(userLoginDto)) {

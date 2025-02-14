@@ -6,7 +6,7 @@ package com.z.admin.design.factory;
  */
 public class FactoryWindows {
 
-    public static Command getApp() {
+    public static Command getApp(){
         return new Dos();
     }
 }
