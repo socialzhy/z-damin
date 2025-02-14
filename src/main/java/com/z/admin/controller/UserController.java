@@ -48,9 +48,7 @@ public class UserController {
      */
     @GetMapping("/info")
     public Result<UserInfoVo> info() {
-        UserLoginDto userLoginDto = LoginUtil.getLoginUser().getUserLoginDto();
-        UserInfoVo userInfoVo = BeanUtils.copyProperties(userLoginDto, UserInfoVo.class);
-        return Result.success(userInfoVo);
+        return Result.success(systemUserService.info());
     }
 
     /**

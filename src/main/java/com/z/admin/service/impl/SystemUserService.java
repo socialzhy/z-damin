@@ -11,6 +11,7 @@ import com.z.admin.entity.enums.ResultCodeEnum;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
 import com.z.admin.entity.po.SystemUser;
+import com.z.admin.entity.vo.system.UserInfoVo;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
@@ -19,29 +20,31 @@ import com.z.admin.service.ISystemRolePermissionService;
 import com.z.admin.service.ISystemUserPermissionService;
 import com.z.admin.service.ISystemUserRoleService;
 import com.z.admin.service.ISystemUserService;
-import com.z.admin.util.DataUtils;
-import com.z.admin.util.JwtUtil;
-import com.z.admin.util.RedisUtil;
+import com.z.admin.util.*;
 import jakarta.annotation.Resource;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author zhy
  * @description 系统用户
+ *
+ *
+ * //     * todo 待处理
+ * //     * 权限分为直接指定用户的权限和用户关联角色的权限.
+ * //     * <p>
+ * //     * 修改用户权限后，更新缓存、更新数据库、注销用户登录状态
+ * //     * 修改用户角色后，更新缓存、更新数据库、注销用户登录状态
+ * //     * <p>
+ * //     * 角色关联权限每次都通过缓存查询，修改时 更新缓存、更新数据
  */
 @Service
 public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService {
 
-    @Resource
-    AuthenticationManager authenticationManager;
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
@@ -82,56 +85,14 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         // 查询权限
         Long userId = user.getId();
         List<Long> roleList = this.userRoleService.queryRoleByUserId(userId);
-        List<Long> rolePermissionList = this.rolePermissionService.queryPermissionByRoleId(roleList);
         List<Long> userPermissionList = this.userPermissionService.queryPermissionByUserId(userId);
-        rolePermissionList.addAll(userPermissionList);
-        List<Long> allPermission = rolePermissionList.stream().distinct().toList();
 
         // 保存用户登录信息
-        redisUtil.set(RedisKeyEnum.USER_INFO, user.getUsername(), UserLoginDto.of(user, roleList, allPermission, token));
+        redisUtil.set(RedisKeyEnum.USER_INFO, user.getUsername(), UserLoginDto.of(user, roleList, userPermissionList, token));
 
         return userLoginVo;
 
     }
-
-//    /**
-//     * todo 待处理
-//     * 权限分为直接指定用户的权限和用户关联角色的权限.
-//     * <p>
-//     * 修改用户权限后，更新缓存、更新数据库、注销用户登录状态
-//     * 修改用户角色后，更新缓存、更新数据库、注销用户登录状态
-//     * <p>
-//     * 角色关联权限每次都通过缓存查询，修改时 更新缓存、更新数据
-//     *
-//     *
-//     *
-//     * 继承 UserDetailsService
-//     * 通过 方式校验密码
-//     * UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword());
-//     *         authenticationManager.authenticate(authToken);
-//     */
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        // 从数据库中查询出用户实体对象
-//        SystemUser user = this.getByUsername(username);
-//        // 没查询到需要抛出该异常，这样才能被Spring Security的错误处理器处理
-//        if (user == null) {
-//            throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
-//        }
-//
-//        if (user.getDisabled()) {
-//            throw new ServiceException(ResultCodeEnum.USER_DISABLED);
-//        }
-//
-//        // 数据库查询
-//        Long userId = user.getId();
-//        List<Long> roleList = this.userRoleService.queryRoleByUserId(userId);
-//        List<Long> userPermissionList = this.userPermissionService.queryPermissionByUserId(userId);
-//        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(roleList, userPermissionList);
-//
-//        // 认证成功，返回自定义的UserDetail对象
-//        return new UserDetail(UserLoginDto.of(user, roleList, userPermissionList), operatePermissionList);
-//    }
 
     @Override
     public UserDetail loadUserByCache(String username) {
@@ -140,14 +101,26 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         if (DataUtils.isEmpty(userLoginDto)) {
             return null;
         }
-
-        List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
-        List<Long> permissionList = userLoginDto.getPermissionList();
-        for (Long permissionId : permissionList) {
-            operatePermissionList.add(new SimpleGrantedAuthority(permissionId.toString()));
-        }
-
+        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(userLoginDto.getRoleList(), userLoginDto.getPermissionList());
         return new UserDetail(userLoginDto, operatePermissionList);
+    }
+
+    @Override
+    public UserInfoVo info() {
+        // 基本信息
+        UserLoginDto userLoginDto = LoginUtil.getLoginUser().getUserLoginDto();
+        UserInfoVo userInfoVo = BeanUtils.copyProperties(userLoginDto, UserInfoVo.class);
+
+        // 权限处理
+        UserDetail userDetail = LoginUtil.getLoginUser();
+        Collection<GrantedAuthority> authorities = userDetail.getAuthorities();
+        List<Long> permissionList = new ArrayList<>();
+        for (GrantedAuthority authority : authorities) {
+            permissionList.add(Long.parseLong(authority.getAuthority()));
+        }
+        userInfoVo.setPermissionList(permissionList);
+
+        return userInfoVo;
     }
 
     /**
@@ -168,6 +141,7 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     private List<SimpleGrantedAuthority> genSimpleGrantedAuthority(List<Long> roleList, List<Long> permissionList) {
         List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
         Set<Long> permissionIdSet = new HashSet<>();
+        // todo 待处理 改缓存
         permissionIdSet.addAll(this.rolePermissionService.queryPermissionByRoleId(roleList));
         permissionIdSet.addAll(permissionList);
         for (Long permissionId : permissionIdSet) {

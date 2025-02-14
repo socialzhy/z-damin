@@ -57,3 +57,11 @@
 //        out.close();
 //    }
 //}
+
+
+// 通过spring security 的方式进行登录
+// 继承UserDetailsService  实现loadUserByUsername方法 返回的UserDetail中需要有password字段
+// 使用登录
+// UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword());
+// authenticationManager.authenticate(authToken);   这个方法会调用实现loadUserByUsername方法
+// 可以配置登录uri， 走到这个类里

@@ -31,7 +31,7 @@ public class UserInfoVo extends BaseVo {
     private List<Long> roleList = new ArrayList<>();
 
     /**
-     * 权限集合
+     * 权限集合, 所有权限，包括角色对应权限和指定权限
      */
     private List<Long> permissionList = new ArrayList<>();
 }
