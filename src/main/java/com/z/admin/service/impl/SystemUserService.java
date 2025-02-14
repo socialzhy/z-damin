@@ -26,9 +26,6 @@ import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +39,7 @@ import java.util.Set;
  * @description 系统用户
  */
 @Service
-public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService, UserDetailsService {
+public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService{
 
     @Resource
     private PasswordEncoder passwordEncoder;
@@ -65,9 +62,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 
     @Override
     public UserLoginVo login(UserLoginForm form) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword());
-        authenticationManager.authenticate(authToken);
-
         // 根据用户名查询出用户实体对象
         SystemUser user = this.getByUsername(form.getUsername());
         // 若没有查到用户 或者 密码校验失败则抛出自定义异常
@@ -89,56 +83,56 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         // 查询权限
         Long userId = user.getId();
         List<Long> roleList = this.userRoleService.queryRoleByUserId(userId);
+        List<Long> rolePermissionList = this.rolePermissionService.queryPermissionByRoleId(roleList);
         List<Long> userPermissionList = this.userPermissionService.queryPermissionByUserId(userId);
+        rolePermissionList.addAll(userPermissionList);
+        List<Long> allPermission = rolePermissionList.stream().distinct().toList();
 
         // 保存用户登录信息
-        redisUtil.set(RedisKeyEnum.USER_INFO, user.getUsername(), UserLoginDto.of(user, roleList, userPermissionList));
+        redisUtil.set(RedisKeyEnum.USER_INFO, user.getUsername(), UserLoginDto.of(user, roleList, allPermission, token));
 
         return userLoginVo;
 
     }
 
-    /**
-     * todo 待处理
-     * 权限分为直接指定用户的权限和用户关联角色的权限.
-     * <p>
-     * 修改用户权限后，更新缓存、更新数据库、注销用户登录状态
-     * 修改用户角色后，更新缓存、更新数据库、注销用户登录状态
-     * <p>
-     * 角色关联权限每次都通过缓存查询，修改时 更新缓存、更新数据
-     */
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 内存查询
-        UserDetail userDetail = this.loadUserByCache(username);
-        if (DataUtils.isNotEmpty(userDetail)){
-            return userDetail;
-        }
-
-        // 从数据库中查询出用户实体对象
-        SystemUser user = this.getByUsername(username);
-        // 没查询到需要抛出该异常，这样才能被Spring Security的错误处理器处理
-        if (user == null) {
-            throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
-        }
-
-        if (user.getDisabled()) {
-            throw new ServiceException(ResultCodeEnum.USER_DISABLED);
-        }
-
-        // 数据库查询
-        Long userId = user.getId();
-        List<Long> roleList = this.userRoleService.queryRoleByUserId(userId);
-        List<Long> userPermissionList = this.userPermissionService.queryPermissionByUserId(userId);
-        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(roleList, userPermissionList);
-
-        // 存入内存
-        UserDetail userDetails = new UserDetail(UserLoginDto.of(user, roleList, userPermissionList), operatePermissionList);
-        redisUtil.set(RedisKeyEnum.USER_INFO, username, userDetails.getUserLoginDto());
-
-        // 认证成功，返回自定义的UserDetail对象
-        return userDetails;
-    }
+//    /**
+//     * todo 待处理
+//     * 权限分为直接指定用户的权限和用户关联角色的权限.
+//     * <p>
+//     * 修改用户权限后，更新缓存、更新数据库、注销用户登录状态
+//     * 修改用户角色后，更新缓存、更新数据库、注销用户登录状态
+//     * <p>
+//     * 角色关联权限每次都通过缓存查询，修改时 更新缓存、更新数据
+//     *
+//     *
+//     *
+//     * 继承 UserDetailsService
+//     * 通过 方式校验密码
+//     * UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(form.getUsername(), form.getPassword());
+//     *         authenticationManager.authenticate(authToken);
+//     */
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        // 从数据库中查询出用户实体对象
+//        SystemUser user = this.getByUsername(username);
+//        // 没查询到需要抛出该异常，这样才能被Spring Security的错误处理器处理
+//        if (user == null) {
+//            throw new ServiceException(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR);
+//        }
+//
+//        if (user.getDisabled()) {
+//            throw new ServiceException(ResultCodeEnum.USER_DISABLED);
+//        }
+//
+//        // 数据库查询
+//        Long userId = user.getId();
+//        List<Long> roleList = this.userRoleService.queryRoleByUserId(userId);
+//        List<Long> userPermissionList = this.userPermissionService.queryPermissionByUserId(userId);
+//        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(roleList, userPermissionList);
+//
+//        // 认证成功，返回自定义的UserDetail对象
+//        return new UserDetail(UserLoginDto.of(user, roleList, userPermissionList), operatePermissionList);
+//    }
 
     @Override
     public UserDetail loadUserByCache(String username){
@@ -148,7 +142,12 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
             return null;
         }
 
-        List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(userLoginDto.getRoleList(), userLoginDto.getPermissionList());
+        List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
+        List<Long> permissionList = userLoginDto.getPermissionList();
+        for (Long permissionId : permissionList) {
+            operatePermissionList.add(new SimpleGrantedAuthority(permissionId.toString()));
+        }
+
         return new UserDetail(userLoginDto, operatePermissionList);
     }
 
@@ -178,4 +177,5 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
 
         return operatePermissionList;
     }
+
 }

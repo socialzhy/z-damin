@@ -33,13 +33,14 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain chain) throws ServletException, IOException {
         // 从请求头中获取token字符串并解析
-        Claims claims = JwtUtil.parse(request.getHeader("Authorization"));
+        String token = request.getHeader("Authorization");
+        Claims claims = JwtUtil.parse(token);
         if (claims != null) {
             // 从`JWT`中提取出之前存储好的用户名
             String username = claims.getSubject();
             // 从缓存中查询出用户对象,如果不在缓存里则认证失败,需要重新登录
-            UserDetails user = systemUserService.loadUserByCache(username);
-            if (DataUtils.isEmpty(user)){
+            UserDetail user = systemUserService.loadUserByCache(username);
+            if (DataUtils.isEmpty(user) || !token.equals(user.getUserLoginDto().getToken())){
                 throw new ServiceException(ResultCodeEnum.AUTHENTICATION_FAILED);
             }
             // 手动组装一个认证对象

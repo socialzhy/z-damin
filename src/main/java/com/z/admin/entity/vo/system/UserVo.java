@@ -1,6 +1,7 @@
 package com.z.admin.entity.vo.system;
 
 import com.z.admin.entity.po.SystemUser;
+import com.z.admin.entity.vo.base.BaseVo;
 import com.z.admin.util.BeanUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,16 +12,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserVo {
+public class UserVo extends BaseVo {
 
-    /**
-     * 用户id
-     */
-    private Long id;
     /**
      * 手机号
      */
-
     private String mobile;
     /**
      * 用户名
@@ -30,10 +26,6 @@ public class UserVo {
      * 邮箱
      */
     private String email;
-    /**
-     * 密码
-     */
-    private String pwd;
     /**
      * 昵称
      */

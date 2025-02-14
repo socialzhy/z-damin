@@ -17,11 +17,14 @@ public class UserLoginDto extends UserInfoVo {
 
     private String password;
 
-    public static UserLoginDto of (SystemUser systemUser, List<Long> roleList, List<Long> permissionList){
+    private String token;
+
+    public static UserLoginDto of(SystemUser systemUser, List<Long> roleList, List<Long> permissionList,String token){
         UserLoginDto dto = systemUser.toVO(UserLoginDto.class);
         dto.setRoleList(roleList);
         dto.setPermissionList(permissionList);
         dto.setPassword(systemUser.getPassword());
+        dto.setToken(token);
         return dto;
     }
 }

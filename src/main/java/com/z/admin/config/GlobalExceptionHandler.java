@@ -23,7 +23,6 @@ import java.util.Objects;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
     /**
      * 未知错误处理
      */
@@ -42,7 +41,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object serviceExceptionHandle(ServiceException e) {
-        log.error("业务逻辑异常: {}", e.getMessage());
+        log.error("业务逻辑异常: {}", e.getCode().getValue());
         return Result.fail(e.getCode(), e.getMessage());
     }
 
