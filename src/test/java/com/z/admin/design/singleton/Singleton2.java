@@ -10,7 +10,9 @@ public class Singleton2 {
 
     private static volatile Singleton2 instance = null;
 
-    /** 私有化构造方法，保证外部无法调用 */
+    /**
+     * 私有化构造方法，保证外部无法调用
+     */
     private Singleton2() {
     }
 
@@ -18,7 +20,7 @@ public class Singleton2 {
      * 单线程场景可用，多线程场景可能被重复创建（不推荐使用）
      */
     public static Singleton2 getInstance() {
-        if (DataUtils.isEmpty(instance)){
+        if (DataUtils.isEmpty(instance)) {
             instance = new Singleton2();
         }
         return instance;
@@ -28,7 +30,7 @@ public class Singleton2 {
      * 添加synchronized关键字，多线程场景下可用，但是每次都锁，性能较低（不推荐使用）
      */
     public static synchronized Singleton2 getInstance2() {
-        if (DataUtils.isEmpty(instance)){
+        if (DataUtils.isEmpty(instance)) {
             instance = new Singleton2();
         }
         return instance;
