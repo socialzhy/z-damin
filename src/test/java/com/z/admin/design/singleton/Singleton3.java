@@ -10,11 +10,6 @@ public class Singleton3 {
     private Singleton3() {
     }
 
-    /* 此处使用一个内部类来维护单例 */
-    private static class SingletonFactory {
-        private static final Singleton3 instance = new Singleton3();
-    }
-
     /* 获取实例 */
     public static Singleton3 getInstance() {
         return SingletonFactory.instance;
@@ -23,6 +18,11 @@ public class Singleton3 {
     /* 如果该对象被用于序列化，可以保证对象在序列化前后保持一致 */
     public Object readResolve() {
         return getInstance();
+    }
+
+    /* 此处使用一个内部类来维护单例 */
+    private static class SingletonFactory {
+        private static final Singleton3 instance = new Singleton3();
     }
 
 }

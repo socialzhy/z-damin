@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -40,7 +39,7 @@ public class AuthFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
             // 从缓存中查询出用户对象,如果不在缓存里则认证失败,需要重新登录
             UserDetail user = systemUserService.loadUserByCache(username);
-            if (DataUtils.isEmpty(user) || !token.equals(user.getUserLoginDto().getToken())){
+            if (DataUtils.isEmpty(user) || !token.equals(user.getUserLoginDto().getToken())) {
                 throw new ServiceException(ResultCodeEnum.AUTHENTICATION_FAILED);
             }
             // 手动组装一个认证对象
