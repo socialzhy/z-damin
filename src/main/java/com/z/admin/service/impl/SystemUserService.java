@@ -11,7 +11,6 @@ import com.z.admin.entity.enums.ResultCodeEnum;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.param.system.UserQueryParam;
 import com.z.admin.entity.po.SystemUser;
-import com.z.admin.entity.vo.system.UserInfoVo;
 import com.z.admin.entity.vo.system.UserLoginVo;
 import com.z.admin.entity.vo.system.UserVo;
 import com.z.admin.exception.ServiceException;
@@ -22,7 +21,6 @@ import com.z.admin.service.ISystemUserRoleService;
 import com.z.admin.service.ISystemUserService;
 import com.z.admin.util.*;
 import jakarta.annotation.Resource;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -103,24 +101,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
         }
         List<SimpleGrantedAuthority> operatePermissionList = this.genSimpleGrantedAuthority(userLoginDto.getRoleList(), userLoginDto.getPermissionList());
         return new UserDetail(userLoginDto, operatePermissionList);
-    }
-
-    @Override
-    public UserInfoVo info() {
-        // 基本信息
-        UserLoginDto userLoginDto = LoginUtil.getLoginUser().getUserLoginDto();
-        UserInfoVo userInfoVo = BeanUtils.copyProperties(userLoginDto, UserInfoVo.class);
-
-        // 权限处理
-        UserDetail userDetail = LoginUtil.getLoginUser();
-        Collection<GrantedAuthority> authorities = userDetail.getAuthorities();
-        List<Long> permissionList = new ArrayList<>();
-        for (GrantedAuthority authority : authorities) {
-            permissionList.add(Long.parseLong(authority.getAuthority()));
-        }
-        userInfoVo.setPermissionList(permissionList);
-
-        return userInfoVo;
     }
 
     /**

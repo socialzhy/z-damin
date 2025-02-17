@@ -60,14 +60,5 @@ public class TestController {
     public void test() {
         Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!")).start();
         System.out.println("success!!!");
-
-
-        SystemRole role = new SystemRole();
-        role.setId(1L);
-        role.setName("rple");
-        redisUtil.set("user:xx:2", role);
-
-        SystemRole role1 = redisUtil.getObjectFromRedis("user:xx:2", SystemRole.class);
-        System.out.println(role1.getName());
     }
 }

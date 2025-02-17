@@ -21,6 +21,4 @@ public interface ISystemUserService extends IService<SystemUser> {
     UserLoginVo login(UserLoginForm form);
 
     UserDetails loadUserByCache(String username);
-
-    UserInfoVo info();
 }
