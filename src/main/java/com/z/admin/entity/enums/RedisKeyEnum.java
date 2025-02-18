@@ -8,7 +8,9 @@ import lombok.Getter;
  */
 public enum RedisKeyEnum {
 
-    USER_INFO("userInfo:");
+    USER_INFO("userInfo:"),
+
+    PERMISSION("perMission:");
 
     @Getter
     private final String key;

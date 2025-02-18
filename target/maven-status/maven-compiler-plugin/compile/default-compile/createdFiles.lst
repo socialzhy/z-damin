@@ -17,7 +17,6 @@ com/z/admin/service/ISystemUserRoleService.class
 com/z/admin/entity/form/system/UserAddForm.class
 com/z/admin/entity/vo/system/UserVo.class
 com/z/admin/util/orika/converter/ListConverters$ShortListToStringConverter.class
-com/z/admin/entity/po/base/CommonPo.class
 com/z/admin/util/orika/converter/ListConverters$LongListToStringConverter.class
 com/z/admin/util/LoginUtil.class
 com/z/admin/util/JwtUtil.class

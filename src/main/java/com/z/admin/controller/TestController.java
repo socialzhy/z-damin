@@ -1,5 +1,6 @@
 package com.z.admin.controller;
 
+import com.z.admin.entity.enums.RedisKeyEnum;
 import com.z.admin.entity.form.system.UserLoginForm;
 import com.z.admin.entity.po.SystemRole;
 import com.z.admin.entity.po.SystemUser;
@@ -11,6 +12,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhy
@@ -58,7 +63,28 @@ public class TestController {
 
     @GetMapping("/test")
     public void test() {
-        Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!")).start();
-        System.out.println("success!!!");
+//        Thread.ofVirtual().name("vittualThread").unstarted(() -> System.out.println("task run!!!")).start();
+//        System.out.println("success!!!");
+
+        SystemUser a = new SystemUser();
+        a.setId(1L);
+        a.setUsername("aaa");
+
+        SystemUser b = new SystemUser();
+        b.setId(2L);
+        b.setUsername("bbbb");
+
+        List<SystemUser> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+
+        redisUtil.del("xxx");
+
+
+        redisUtil.lSetAll(RedisKeyEnum.PERMISSION,list);
+
+
+
+        System.out.println(redisUtil.lGet("xxx", 0, -1));
     }
 }

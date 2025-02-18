@@ -15,10 +15,19 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class UserQueryParam extends BasePageParam<SystemUser> {
 
+    /**
+     * 主键id
+     */
     private Long id;
 
+    /**
+     * 手机号
+     */
     private String mobile;
 
+    /**
+     * 昵称
+     */
     private String nickName;
 
 

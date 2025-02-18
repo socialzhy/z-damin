@@ -6,11 +6,14 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author zhy
@@ -297,6 +300,23 @@ public class RedisUtil {
     /**
      * 获取 list 缓存的内容
      *
+     * @param redisKeyEnum   键
+     * @return list 缓存的内容
+     */
+    public <T> List<T>  lGetAll(RedisKeyEnum redisKeyEnum, Class<T> clazz) {
+        List<Object> list = this.lGet(redisKeyEnum.getKey(), 0, -1);
+        if (DataUtils.isEmpty(list)){
+            return new ArrayList<>();
+        }
+
+        return list.stream()
+                .map(value -> objectMapper.convertValue(value, clazz))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取 list 缓存的内容
+     *
      * @param key   键
      * @param start 开始
      * @param end   结束 0 到 -1 代表所有值
@@ -314,6 +334,16 @@ public class RedisUtil {
     /**
      * 将 list 放入缓存
      *
+     * @param value 值
+     * @return 是否成功
+     */
+    public Boolean lSet(RedisKeyEnum redisKeyEnum, Object value) {
+        return this.lSet(redisKeyEnum.getKey(),value);
+    }
+
+    /**
+     * 将 list 放入缓存
+     *
      * @param key   键
      * @param value 值
      * @return 是否成功
@@ -326,5 +356,30 @@ public class RedisUtil {
             log.error("redis lSet error , key : {} , value : {}", key, value, e);
             return false;
         }
+    }
+
+    /**
+     * 将 list 放入缓存
+     *
+     * @param key   键
+     * @param value 值
+     * @return 是否成功
+     */
+    public Boolean lSetAll(String key, List<?> value) {
+        try {
+            // 使用toArray保证list不被当成一个单一元素被储存
+            redisTemplate.opsForList().rightPushAll(key, value.toArray());
+            return true;
+        } catch (Exception e) {
+            log.error("redis lSet error , key : {} , value : {}", key, value, e);
+            return false;
+        }
+    }
+
+    /**
+     * 将 list 放入缓存
+     */
+    public Boolean lSetAll(RedisKeyEnum redisKeyEnum, List<?> value) {
+        return this.lSetAll(redisKeyEnum.getKey(), value);
     }
 }
