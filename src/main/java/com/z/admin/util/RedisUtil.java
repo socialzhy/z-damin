@@ -6,7 +6,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +73,15 @@ public class RedisUtil {
             log.error("redis hasKey error , key : {}", key, e);
             return false;
         }
+    }
+
+    /**
+     * 删除缓存
+     *
+     * @param redisKeyEnum 枚举key
+     */
+    public void del(RedisKeyEnum redisKeyEnum) {
+        this.del(redisKeyEnum.getKey());
     }
 
     /**
@@ -300,12 +308,12 @@ public class RedisUtil {
     /**
      * 获取 list 缓存的内容
      *
-     * @param redisKeyEnum   键
+     * @param redisKeyEnum 键
      * @return list 缓存的内容
      */
-    public <T> List<T>  lGetAll(RedisKeyEnum redisKeyEnum, Class<T> clazz) {
+    public <T> List<T> lGetAll(RedisKeyEnum redisKeyEnum, Class<T> clazz) {
         List<Object> list = this.lGet(redisKeyEnum.getKey(), 0, -1);
-        if (DataUtils.isEmpty(list)){
+        if (DataUtils.isEmpty(list)) {
             return new ArrayList<>();
         }
 
@@ -338,7 +346,7 @@ public class RedisUtil {
      * @return 是否成功
      */
     public Boolean lSet(RedisKeyEnum redisKeyEnum, Object value) {
-        return this.lSet(redisKeyEnum.getKey(),value);
+        return this.lSet(redisKeyEnum.getKey(), value);
     }
 
     /**

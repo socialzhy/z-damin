@@ -19,19 +19,24 @@ import com.z.admin.service.ISystemRolePermissionService;
 import com.z.admin.service.ISystemUserPermissionService;
 import com.z.admin.service.ISystemUserRoleService;
 import com.z.admin.service.ISystemUserService;
-import com.z.admin.util.*;
+import com.z.admin.util.DataUtils;
+import com.z.admin.util.JwtUtil;
+import com.z.admin.util.RedisUtil;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author zhy
  * @description 系统用户
- *
- *
+ * <p>
+ * <p>
  * //     * todo 待处理
  * //     * 权限分为直接指定用户的权限和用户关联角色的权限.
  * //     * <p>
@@ -121,7 +126,6 @@ public class SystemUserService extends ServiceImpl<SystemUserMapper, SystemUser>
     private List<SimpleGrantedAuthority> genSimpleGrantedAuthority(List<Long> roleList, List<Long> permissionList) {
         List<SimpleGrantedAuthority> operatePermissionList = new ArrayList<>();
         Set<Long> permissionIdSet = new HashSet<>();
-        // todo 待处理 改缓存
         permissionIdSet.addAll(this.rolePermissionService.queryPermissionByRoleId(roleList));
         permissionIdSet.addAll(permissionList);
         for (Long permissionId : permissionIdSet) {

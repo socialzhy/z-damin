@@ -12,7 +12,7 @@ import java.util.List;
  * @description 用户登录信息
  */
 @Data
-public class UserLoginDto{
+public class UserLoginDto {
 
     /**
      * 用户id
@@ -45,7 +45,7 @@ public class UserLoginDto{
     private String token;
 
     public static UserLoginDto of(SystemUser systemUser, List<Long> roleList, List<Long> permissionList, String token) {
-        UserLoginDto dto = BeanUtils.copyProperties(systemUser,UserLoginDto.class);
+        UserLoginDto dto = BeanUtils.copyProperties(systemUser, UserLoginDto.class);
         dto.setRoleList(roleList);
         dto.setPermissionList(permissionList);
         dto.setToken(token);

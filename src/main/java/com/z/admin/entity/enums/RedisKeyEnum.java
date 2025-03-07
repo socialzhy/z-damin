@@ -4,15 +4,17 @@ import lombok.Getter;
 
 /**
  * @author zhy
- * @description
+ * @description redisKey
  */
+@Getter
 public enum RedisKeyEnum {
 
     USER_INFO("userInfo:"),
 
-    PERMISSION("perMission:");
+    PERMISSION("perMission:"),
 
-    @Getter
+    ROLE_PERMISSION("rolePerMission:");
+
     private final String key;
 
     RedisKeyEnum(String key) {

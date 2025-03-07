@@ -2,7 +2,6 @@ package com.z.admin.controller;
 
 import com.z.admin.entity.enums.RedisKeyEnum;
 import com.z.admin.entity.form.system.UserLoginForm;
-import com.z.admin.entity.po.SystemRole;
 import com.z.admin.entity.po.SystemUser;
 import com.z.admin.entity.vo.base.Result;
 import com.z.admin.service.ISystemUserService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhy
@@ -81,8 +79,7 @@ public class TestController {
         redisUtil.del("xxx");
 
 
-        redisUtil.lSetAll(RedisKeyEnum.PERMISSION,list);
-
+        redisUtil.lSetAll(RedisKeyEnum.PERMISSION, list);
 
 
         System.out.println(redisUtil.lGet("xxx", 0, -1));

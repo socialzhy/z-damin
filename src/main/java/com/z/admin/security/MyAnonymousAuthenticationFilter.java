@@ -26,7 +26,7 @@ public class MyAnonymousAuthenticationFilter extends AnonymousAuthenticationFilt
 
     @Override
     protected Authentication createAuthentication(HttpServletRequest request) {
-        // 设置匿名访问权限 todo 待处理   改成缓存
+        // 设置匿名访问权限
         List<String> anonymousPermissionList = this.permissionService.queryAnonymousPermission();
         return new AnonymousAuthenticationToken(ANONYMOUS_KEY, ANONYMOUS_USER_KEY, AuthorityUtils.createAuthorityList(anonymousPermissionList));
     }

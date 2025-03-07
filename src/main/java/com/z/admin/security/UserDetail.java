@@ -14,7 +14,9 @@ import java.util.Collection;
 @Getter
 public class UserDetail extends User {
 
-    /** 我们自己的用户实体对象，要调取用户信息时直接获取这个实体对象 */
+    /**
+     * 我们自己的用户实体对象，要调取用户信息时直接获取这个实体对象
+     */
     private final UserLoginDto userLoginDto;
 
     public UserDetail(UserLoginDto userLoginDto, Collection<? extends GrantedAuthority> authorities) {

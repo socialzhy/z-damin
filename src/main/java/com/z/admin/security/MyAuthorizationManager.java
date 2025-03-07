@@ -1,9 +1,10 @@
 package com.z.admin.security;
 
+import com.z.admin.entity.enums.RedisKeyEnum;
 import com.z.admin.entity.enums.SystemPermissionLevel;
 import com.z.admin.entity.po.SystemPermission;
-import com.z.admin.service.ISystemPermissionService;
 import com.z.admin.util.DataUtils;
+import com.z.admin.util.RedisUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
     private final String SUPPER_ADMIN_AUTH = "-1";
 
     @Resource
-    private ISystemPermissionService permissionService;
+    private RedisUtil redisUtil;
 
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
@@ -51,11 +52,11 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
     }
 
     /**
-     * 校验是否有权限 todo 待处理  使用缓存
+     * 校验是否有权限
      */
     private boolean checkPermissions(Authentication authentication, HttpServletRequest request) {
         // 获取所有的操作权限
-        List<SystemPermission> systemPermissionList = this.permissionService.queryOperationalPermission();
+        List<SystemPermission> systemPermissionList = this.redisUtil.lGetAll(RedisKeyEnum.PERMISSION, SystemPermission.class);
 
         // 校验访问资源是否存在
         SystemPermission permission = systemPermissionList.stream().filter(systemPermission -> this.checkRequest(request, HttpMethod.valueOf(systemPermission.getMethod()), systemPermission.getPath())).findFirst().orElse(null);
@@ -73,7 +74,7 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
     }
 
     /**
-     * 校验request是否匹配 todo 待处理  使用缓存
+     * 校验request是否匹配
      */
     public boolean checkRequest(HttpServletRequest request, HttpMethod method, String path) {
         CombinedRequestMatcher matcher = new CombinedRequestMatcher(method, path);

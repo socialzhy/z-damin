@@ -16,7 +16,7 @@ import java.util.List;
 public interface ISystemPermissionService extends IService<SystemPermission> {
 
     /**
-     * 查询操作权限
+     * 通过数据库查询权限
      */
     List<SystemPermission> queryOperationalPermission();
 

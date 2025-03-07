@@ -16,7 +16,7 @@ import java.util.List;
 public interface ISystemRolePermissionService extends IService<SystemRolePermission> {
 
     /**
-     * 根据角色id集合查询权限集合  todo 待处理  改为缓存
+     * 根据角色id集合查询权限集合
      */
     List<Long> queryPermissionByRoleId(List<Long> roleIdList);
 }
