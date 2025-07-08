@@ -35,8 +35,8 @@ public class SystemRolePermissionService extends ServiceImpl<SystemRolePermissio
 
         return this.redisUtil.lGetAll(RedisKeyEnum.ROLE_PERMISSION, SystemRolePermission.class)
                 .stream()
+                .filter(e -> roleIdList.contains(e.getRoleId()))
                 .map(SystemRolePermission::getPermissionId)
-                .filter(roleIdList::contains)
                 .toList();
     }
 }
